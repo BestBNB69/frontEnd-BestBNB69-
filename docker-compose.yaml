@@ -1,0 +1,12 @@
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: frontendbestbnb69_img
+    container_name: frontendbestbnb69_ctn
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    restart: unless-stopped
