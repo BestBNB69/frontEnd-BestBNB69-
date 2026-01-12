@@ -1,0 +1,62 @@
+.containe {
+    background: #ccc8a6;
+    width: 100%;
+    /* background-size: cover; */
+}
+
+.pic {
+    /* top: 5%; */
+    width: 744px;
+    height: 691px;
+    /* background: rgba(51, 117, 184, 0.7); */
+}
+
+.Picture {
+    /* background: url('./../../content/images/fauteuil.jpg') no-repeat; */
+    /* background: url('/src/main/webapp/content/images/fauteuil.jpg'); */
+    background-size: auto;
+    width: 70%;
+    /* filter: blur(40%); */
+}
+
+.bang {
+    /* gap: -50%; */
+    /* margin-top: 10%; */
+    flex-direction: row-reverse;
+    /* margin-right: 20%; */
+    /* background: rgba(51, 117, 184, 0.7) url("../../content/images/a-filigrane.png") no-repeat; */
+}
+
+.Auth {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ccc8a6;
+    background-position: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: fit-content;
+}
+
+form label {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#question {
+    width: 110%;
+}
+
+h1 {
+    color: #ba247c;
+    font-weight: bold;
+    text-decoration: underline;
+}
