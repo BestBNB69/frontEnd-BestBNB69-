@@ -1,5 +1,7 @@
 #!/bin/bash
-set -e
 
+# Installer les dépendances du projet
 npm install
-ng serve --host 0.0.0.0 --port 8000 --poll 2000
+
+# Démarrer l'application Angular
+ng serve --host=0.0.0.0 --port ${FRONT_PORT} --poll 2000

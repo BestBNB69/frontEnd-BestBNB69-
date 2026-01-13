@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-p{
+  color:rgb(238, 238, 238);
+}
