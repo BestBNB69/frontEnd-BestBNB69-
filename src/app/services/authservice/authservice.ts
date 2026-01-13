@@ -16,6 +16,7 @@ export interface LoginDto {
 }
 
 export interface RegisterDto {
+  username: string;
   email: string;
   password: string;
 }
@@ -133,9 +134,9 @@ export class Authservice {
 
   private redirectAfterLogin(roles: string[]): void {
     if (roles.includes('HOST')) {
-      this.router.navigate(['/app/host/dashboard']);
+      this.router.navigate(['/host/dashboard']);
     } else {
-      this.router.navigate(['/app/listings']);
+      this.router.navigate(['/listings']);
     }
   }
 }

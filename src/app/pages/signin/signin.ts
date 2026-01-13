@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SigninForm } from '../../component/signin-form/signin-form';
+import { SigninForm } from '../../components/signin-form/signin-form';
 
 @Component({
   selector: 'app-signin',

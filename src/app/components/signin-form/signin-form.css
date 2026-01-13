@@ -1,6 +1,21 @@
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 .containe {
-    background: #ccc8a6;
+    background: linear-gradient(-40deg, #667eea, #ecc183, #bb7881, #f5576c);
     width: 100%;
+    animation: gradientFlow 15s ease infinite;
     /* background-size: cover; */
 }
 
@@ -13,7 +28,8 @@
 
 .Picture {
     /* background: url('./../../content/images/fauteuil.jpg') no-repeat; */
-    /* background: url('/src/main/webapp/content/images/fauteuil.jpg'); */
+    /* background: url('Logo.png'); */
+    background: linear-gradient(90deg, #bb7881, #ecc183, #f5576c);
     background-size: auto;
     width: 70%;
     /* filter: blur(40%); */
@@ -31,7 +47,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #ccc8a6;
+    background-color: #f5576c;
     background-position: left;
 }
 
@@ -56,7 +72,17 @@ form label {
 }
 
 h1 {
-    color: #ba247c;
+    /* color: #5d77ec; */
+    color: rgb(37, 99, 235);
     font-weight: bold;
     text-decoration: underline;
+    /* font-size: 150%; */
+}
+
+input:focus {
+    transition: all 0.2s ease-in-out;
+}
+
+button {
+    transition: all 0.2s ease-in-out;
 }

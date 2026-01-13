@@ -1,0 +1,17 @@
+input:focus {
+    transition: all 0.2s ease-in-out;
+}
+
+button {
+    transition: all 0.2s ease-in-out;
+}
+
+.containe {
+    background: linear-gradient(40deg, #667eea, #ecc183, #bb7881, #f5576c);
+    width: 100%;
+    animation: gradientFlow 15s ease infinite;
+}
+
+.c2 {
+    background: linear-gradient(180deg, #ecc183, #ecd383);
+}

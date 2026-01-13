@@ -7,12 +7,14 @@ const routes: Routes = [
     {
         path: 'login',
         component: Signin,
-        canActivate: [Guestguard]
+        canActivate: [Guestguard],
+        title: "Connexion"
     },
     {
         path: 'register',
         component: Signup,
-        canActivate: [Guestguard]
+        canActivate: [Guestguard],
+        title: "Inscription"
     }
 ];
 export default routes;
