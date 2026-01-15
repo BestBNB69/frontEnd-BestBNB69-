@@ -86,13 +86,13 @@ export class Authservice {
 
   private storeAuth(res: AuthResponse): void {
     // console.log(res);
-    localStorage.setItem('accessToken', res.accessToken);
+    localStorage.setItem('accessToken', "azerty");
 
     if (res.refreshToken) {
       localStorage.setItem('refreshToken', res.refreshToken);
     }
 
-    localStorage.setItem('roles', JSON.stringify(res.roles));
+    // localStorage.setItem('roles', JSON.stringify(res.roles));
     // localStorage.setItem('userId', res.userId.toString());
 
     this.isLoggedIn$.next(true);

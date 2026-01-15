@@ -12,8 +12,10 @@ export class Authguard {
   ) { }
 
   canActivate(): boolean {
+    // const token = this.auth.isAuthenticated();
+    // console.log('AuthGuard check, token =', token);
     if (!this.auth.isAuthenticated()) {
-      this.router.navigate(['/auth/register']);
+      this.router.navigate(['/auth/login']);
       return false;
     }
     return true;
