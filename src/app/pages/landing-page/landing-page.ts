@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {LandingPageComponent} from '../../components/landing-page-component/landing-page-component';
 import {Categories} from '../../components/categories/categories';
 import {SearchDestination} from '../../components/search-destination/search-destination';
 import {ListingAnnoucement} from '../../components/listing-annoucement/listing-annoucement';
@@ -7,7 +6,6 @@ import {ListingAnnoucement} from '../../components/listing-annoucement/listing-a
 @Component({
   selector: 'app-landing-page',
   imports: [
-    LandingPageComponent,
     Categories,
     SearchDestination,
     ListingAnnoucement
