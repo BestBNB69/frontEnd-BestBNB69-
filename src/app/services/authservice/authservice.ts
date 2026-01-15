@@ -21,11 +21,17 @@ export interface RegisterDto {
   password: string;
 }
 
+export interface RegisterBackDto {
+  Name: string;
+  EmailAddress: string;
+  PasswordHash: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class Authservice {
-  private readonly API_URL = '/api/v1/auth';
+  private readonly API_URL = 'http://localhost:5235/api';
 
   private isLoggedIn$ = new BehaviorSubject<boolean>(this.hasToken());
   private roles$ = new BehaviorSubject<string[]>(this.getStoredRoles());
@@ -46,7 +52,12 @@ export class Authservice {
   }
 
   register(data: RegisterDto): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/register`, data)
+    const newRes: RegisterBackDto = {
+      Name: data.username,
+      EmailAddress: data.email,
+      PasswordHash: data.password
+    };
+    return this.http.post<AuthResponse>(`${this.API_URL}/test-db/Create`, newRes)
       .pipe(
         tap(res => {
           this.storeAuth(res);
@@ -74,6 +85,7 @@ export class Authservice {
   }
 
   private storeAuth(res: AuthResponse): void {
+    // console.log(res);
     localStorage.setItem('accessToken', res.accessToken);
 
     if (res.refreshToken) {
@@ -81,7 +93,7 @@ export class Authservice {
     }
 
     localStorage.setItem('roles', JSON.stringify(res.roles));
-    localStorage.setItem('userId', res.userId.toString());
+    // localStorage.setItem('userId', res.userId.toString());
 
     this.isLoggedIn$.next(true);
     this.roles$.next(res.roles);
@@ -133,10 +145,10 @@ export class Authservice {
   }
 
   private redirectAfterLogin(roles: string[]): void {
-    if (roles.includes('HOST')) {
-      this.router.navigate(['/host/dashboard']);
-    } else {
-      this.router.navigate(['/listings']);
-    }
+    // if (roles.includes('HOST')) {
+    // this.router.navigate(['/host/dashboard']);
+    // } else {
+    // this.router.navigate(['/listings']);
+    // }
   }
 }

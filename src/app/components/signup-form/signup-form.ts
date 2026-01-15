@@ -20,6 +20,7 @@ export class SignupForm implements AfterViewInit {
   errorEmailExists = signal(false);
   errorUserExists = signal(false);
   success = signal(false);
+  errorMessage = signal('');
 
   registerForm = new FormGroup({
     username: new FormControl('', {
@@ -75,6 +76,8 @@ export class SignupForm implements AfterViewInit {
       this.errorEmailExists.set(true);
     } else {
       this.error.set(true);
+      this.errorMessage.set(response.message)
+      console.log(response.headers)
     }
   }
 }
