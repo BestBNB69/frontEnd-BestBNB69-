@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { Authservice } from '../../services/authservice/authservice';
 
 @Component({
   standalone: true,
@@ -11,18 +12,17 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class SigninForm implements OnInit, AfterViewInit {
 
-  username = viewChild.required<ElementRef>('username')
+  email = viewChild.required<ElementRef>('email')
 
   authenticationError = signal(false);
 
   loginForm = new FormGroup({
-    username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     rememberMe: new FormControl(false, { nonNullable: true, validators: [Validators.required] }),
   });
 
-  // private accountService = inject(AccountService);
-  // private loginService = inject(LoginService);
+  private loginService = inject(Authservice);
   private router = inject(Router);
 
   ngOnInit(): void {
@@ -36,19 +36,16 @@ export class SigninForm implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.username().nativeElement.focus();
+    this.email().nativeElement.focus();
   }
 
   login(): void {
-    // this.loginService.login(this.loginForm.getRawValue()).subscribe({
-    //   next: () => {
-    //     this.authenticationError.set(false);
-    //     if (!this.router.getCurrentNavigation()) {
-    //       // There were no routing during login (eg from navigationToStoredUrl)
-    //       this.router.navigate(['']);
-    //     }
-    //   },
-    //   error: () => this.authenticationError.set(true),
-    // });
+    this.loginService.login(this.loginForm.getRawValue()).subscribe({
+      next: () => {
+        // this.authenticationError.set(false);
+        // this.router.navigate(['/listings/1']);
+      },
+      error: () => this.authenticationError.set(true),
+    });
   }
 }

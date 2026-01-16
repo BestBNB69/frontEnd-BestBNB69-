@@ -8,7 +8,7 @@ export const routes: Routes = [
 
     {
         path: '',
-        redirectTo: 'auth/login',
+        redirectTo: 'listings/1',
         pathMatch: 'full'
     },
 
@@ -26,7 +26,8 @@ export const routes: Routes = [
     {
         path: 'listings/:id',
         component: Listing,
-        canActivate: [Authguard], // seulement si connecté
+        canActivate: [Authguard],
+        title: "Details",
     },
     {
         path: 'messages',

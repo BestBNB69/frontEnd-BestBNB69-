@@ -4,15 +4,21 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 export interface AuthResponse {
-  accessToken: string;
-  refreshToken?: string;
-  roles: string[];
-  userId: number;
+  Success: boolean;
+  Message?: string;
+  error?: string;
+  // roles: string[];
+  token: string;
 }
 
 export interface LoginDto {
   email: string;
   password: string;
+}
+
+export interface LoginBackDto {
+  EmailAddress: string;
+  PasswordHash: string;
 }
 
 export interface RegisterDto {
@@ -42,11 +48,15 @@ export class Authservice {
   ) { }
 
   login(data: LoginDto): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/login`, data)
+    const newRes: LoginBackDto = {
+      EmailAddress: data.email,
+      PasswordHash: data.password
+    };
+    return this.http.post<AuthResponse>(`${this.API_URL}/Users/Login`, newRes)
       .pipe(
         tap(res => {
           this.storeAuth(res);
-          this.redirectAfterLogin(res.roles);
+          this.redirectAfterLogin();
         })
       );
   }
@@ -57,11 +67,11 @@ export class Authservice {
       EmailAddress: data.email,
       PasswordHash: data.password
     };
-    return this.http.post<AuthResponse>(`${this.API_URL}/test-db/Create`, newRes)
+    return this.http.post<AuthResponse>(`${this.API_URL}/Users/Register`, newRes)
       .pipe(
         tap(res => {
           this.storeAuth(res);
-          this.redirectAfterLogin(res.roles);
+          // this.redirectAfterLogin();
         })
       );
   }
@@ -86,17 +96,21 @@ export class Authservice {
 
   private storeAuth(res: AuthResponse): void {
     // console.log(res);
-    localStorage.setItem('accessToken', "azerty");
-
-    if (res.refreshToken) {
-      localStorage.setItem('refreshToken', res.refreshToken);
+    if (!res.token) {
+      console.error('NO TOKEN IN AUTH RESPONSE', res);
+      return;
     }
+    localStorage.setItem('accessToken', res.token);
+
+    // if (res.refreshToken) {
+    //   localStorage.setItem('refreshToken', res.refreshToken);
+    // }
 
     // localStorage.setItem('roles', JSON.stringify(res.roles));
     // localStorage.setItem('userId', res.userId.toString());
 
     this.isLoggedIn$.next(true);
-    this.roles$.next(res.roles);
+    // this.roles$.next(res.roles);
   }
 
   private clearStorage(): void {
@@ -144,11 +158,11 @@ export class Authservice {
     return roles ? JSON.parse(roles) : [];
   }
 
-  private redirectAfterLogin(roles: string[]): void {
+  private redirectAfterLogin(): void {
     // if (roles.includes('HOST')) {
     // this.router.navigate(['/host/dashboard']);
     // } else {
-    // this.router.navigate(['/listings']);
+    this.router.navigate(['/listings/1']);
     // }
   }
 }
