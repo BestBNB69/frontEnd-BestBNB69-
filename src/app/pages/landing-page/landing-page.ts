@@ -14,5 +14,14 @@ import {ListingAnnoucement} from '../../components/listing-annoucement/listing-a
   styleUrl: './landing-page.css',
 })
 export class LandingPage {
-
+categories = [
+  {name: 'Plage', icone: '🏖️', first: true},
+  {name: 'Montagne', icone: '🏔️'},
+  {name: 'Campagne', icone: '🏡'},
+  {name: 'Ville', icone: '🏙️'},
+  {name: 'Historique', icone: '🏰'},
+  {name: 'Luxe', icone: '✨'},
+  {name: 'Cabane', icone: '🌲'},
+  {name: 'Piscine', icone: '🏊'},
+]
 }

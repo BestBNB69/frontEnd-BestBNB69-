@@ -1,38 +1,13 @@
 <section class="border-b border-border-color">
   <div class="max-w-[1760px] mx-auto px-10 py-10">
     <div class="flex gap-8 overflow-x-auto pb-4">
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-dark-gray">
-        <div class="text-2xl opacity-100">🏖️</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Plage</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-transparent">
-        <div class="text-2xl opacity-60 hover:opacity-100 transition">🏔️</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Montagne</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-transparent">
-        <div class="text-2xl opacity-60 hover:opacity-100 transition">🏡</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Campagne</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-transparent">
-        <div class="text-2xl opacity-60 hover:opacity-100 transition">🏙️</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Ville</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-transparent">
-        <div class="text-2xl opacity-60 hover:opacity-100 transition">🏰</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Historique</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-transparent">
-        <div class="text-2xl opacity-60 hover:opacity-100 transition">✨</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Luxe</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-transparent">
-        <div class="text-2xl opacity-60 hover:opacity-100 transition">🌲</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Cabane</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 border-transparent">
-        <div class="text-2xl opacity-60 hover:opacity-100 transition">🏊</div>
-        <span class="text-xs font-medium text-medium-gray whitespace-nowrap">Piscine</span>
-      </div>
+      @for (category of categories; track $index){
+        <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 "
+             [ngClass]="category.first ? 'border-dark-gray' : 'border-transparent'">
+          <div class="text-2xl opacity-100">{{category.icone}}</div>
+          <span class="text-xs font-medium text-medium-gray whitespace-nowrap">{{category.name}}</span>
+        </div>
+      }
     </div>
   </div>
 </section>
