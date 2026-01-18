@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ListingAnnoucementModel} from '../../models/listing-annoucement-model';
 
 @Component({
   selector: 'app-listing-annoucement',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './listing-annoucement.css',
 })
 export class ListingAnnoucement {
+  @Input() listingAnnoucement: ListingAnnoucementModel[] = [];
 
 }

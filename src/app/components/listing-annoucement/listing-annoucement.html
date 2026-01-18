@@ -4,26 +4,26 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    <!-- Listing Card 1 -->
-    <div class="cursor-pointer hover:-translate-y-1 transition-transform duration-200">
-      <div class="relative w-full h-[280px] rounded-2xl overflow-hidden mb-3">
-        <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600" alt="Villa" class="w-full h-full object-cover">
-        <button class="absolute top-3 right-3 bg-white/90 hover:bg-white w-8 h-8 rounded-full flex items-center justify-center transition hover:scale-110">
-          <span class="text-lg">♡</span>
-        </button>
-        <span class="absolute bottom-3 left-3 bg-white px-3 py-1.5 rounded-lg text-xs font-semibold">Coup de cœur</span>
-      </div>
-      <div class="px-1">
-        <div class="flex justify-between items-center mb-1">
-          <span class="font-semibold text-[15px]">Nice, France</span>
-          <span class="flex items-center gap-1 text-sm font-medium">⭐ 4.95</span>
+    @for (listingAnnoucements of listingAnnoucement; track $index) {
+      <div class="cursor-pointer hover:-translate-y-1 transition-transform duration-200">
+        <div class="relative w-full h-[280px] rounded-2xl overflow-hidden mb-3">
+          <img src="{{listingAnnoucements.picture}}" class="w-full h-full object-cover">
+          <button class="absolute top-3 right-3 bg-white/90 hover:bg-white w-8 h-8 rounded-full flex items-center justify-center transition hover:scale-110">
+            <span class="text-lg">♡</span>
+          </button>
+          <span class="absolute bottom-3 left-3 bg-white px-3 py-1.5 rounded-lg text-xs font-semibold">Coup de cœur</span>
         </div>
-        <div class="text-sm text-medium-gray mb-1">Villa avec vue mer</div>
-        <div class="text-sm text-medium-gray mb-2">15-20 mai</div>
-        <div class="text-[15px]"><strong class="font-semibold">250€</strong> par nuit</div>
+        <div class="px-1">
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-semibold text-[15px]">{{ listingAnnoucements.city }}</span>
+            <span class="flex items-center gap-1 text-sm font-medium">{{ listingAnnoucements.icone }} {{ listingAnnoucements.rating }}</span>
+          </div>
+          <div class="text-sm text-medium-gray mb-1">{{ listingAnnoucements.description }}</div>
+          <div class="text-sm text-medium-gray mb-2">{{ listingAnnoucements.date }}</div>
+          <div class="text-[15px]"><strong class="font-semibold">{{ listingAnnoucements.price }}€</strong> par nuit</div>
+        </div>
       </div>
-    </div>
-
+    }
     <!-- Listing Card 2 -->
     <div class="cursor-pointer hover:-translate-y-1 transition-transform duration-200">
       <div class="relative w-full h-[280px] rounded-2xl overflow-hidden mb-3">
