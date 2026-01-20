@@ -12,9 +12,9 @@ export class Guestguard implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-    console.log(localStorage.getItem('accessToken'))
+    // console.log(localStorage.getItem('accessToken'))
     if (this.auth.isAuthenticated()) {
-      this.router.navigate(['/listings/1']);
+      this.router.navigate(['/listings']);
       return false;
     }
     return true;

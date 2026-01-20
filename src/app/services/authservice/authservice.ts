@@ -2,36 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-
-export interface AuthResponse {
-  Success: boolean;
-  Message?: string;
-  error?: string;
-  // roles: string[];
-  token: string;
-}
-
-export interface LoginDto {
-  email: string;
-  password: string;
-}
-
-export interface LoginBackDto {
-  EmailAddress: string;
-  PasswordHash: string;
-}
-
-export interface RegisterDto {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export interface RegisterBackDto {
-  Name: string;
-  EmailAddress: string;
-  PasswordHash: string;
-}
+import { AuthResponse } from '../../models/authreponse';
+import { LoginDto, LoginBackDto, RegisterDto, RegisterBackDto } from '../../models/sign';
 
 @Injectable({
   providedIn: 'root',
@@ -162,7 +134,7 @@ export class Authservice {
     // if (roles.includes('HOST')) {
     // this.router.navigate(['/host/dashboard']);
     // } else {
-    this.router.navigate(['/listings/1']);
+    this.router.navigate(['/listings']);
     // }
   }
 }

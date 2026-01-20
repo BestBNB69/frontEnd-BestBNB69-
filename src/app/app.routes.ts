@@ -3,12 +3,13 @@ import { Authguard } from './services/authguard/authguard';
 import { Roleguard } from './services/roleguard/roleguard';
 import { Signin } from './pages/signin/signin';
 import { Listing } from './pages/listing/listing';
+import { LandingPage } from './pages/landing-page/landing-page';
 
 export const routes: Routes = [
 
     {
         path: '',
-        redirectTo: 'listings/1',
+        redirectTo: 'auth/login',
         pathMatch: 'full'
     },
 
@@ -21,7 +22,7 @@ export const routes: Routes = [
     {
         path: 'listings',
         canActivate: [Authguard],
-        component: Signin // 🔧 TEMPORAIRE (à remplacer)
+        component: LandingPage
     },
     {
         path: 'listings/:id',

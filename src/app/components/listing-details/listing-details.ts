@@ -3,10 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ListingsService } from '../../services/listings/listings-service';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
+import { Header } from '../../components/header/header';
+import { Footer } from '../../components/footer/footer';
+
 
 @Component({
   selector: 'app-listing-details',
-  imports: [CommonModule],
+  imports: [CommonModule, Header, Footer],
   templateUrl: './listing-details.html',
   styleUrl: './listing-details.css',
 })
