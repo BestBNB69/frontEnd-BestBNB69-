@@ -1,0 +1,88 @@
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.containe {
+    background: linear-gradient(-40deg, #667eea, #ecc183, #bb7881, #f5576c);
+    width: 100%;
+    animation: gradientFlow 15s ease infinite;
+    /* background-size: cover; */
+}
+
+.pic {
+    /* top: 5%; */
+    width: 744px;
+    height: 691px;
+    /* background: rgba(51, 117, 184, 0.7); */
+}
+
+.Picture {
+    /* background: url('./../../content/images/fauteuil.jpg') no-repeat; */
+    /* background: url('Logo.png'); */
+    background: linear-gradient(90deg, #bb7881, #ecc183, #f5576c);
+    background-size: auto;
+    width: 70%;
+    /* filter: blur(40%); */
+}
+
+.bang {
+    /* gap: -50%; */
+    /* margin-top: 10%; */
+    flex-direction: row-reverse;
+    /* margin-right: 20%; */
+    /* background: rgba(51, 117, 184, 0.7) url("../../content/images/a-filigrane.png") no-repeat; */
+}
+
+.Auth {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f5576c;
+    background-position: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: fit-content;
+}
+
+form label {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#question {
+    width: 110%;
+}
+
+h1 {
+    /* color: #5d77ec; */
+    color: rgb(37, 99, 235);
+    font-weight: bold;
+    text-decoration: underline;
+    /* font-size: 150%; */
+}
+
+input:focus {
+    transition: all 0.2s ease-in-out;
+}
+
+button {
+    transition: all 0.2s ease-in-out;
+}

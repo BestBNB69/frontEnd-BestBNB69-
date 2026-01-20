@@ -1,7 +1,9 @@
+/* @import "tailwindcss"; */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.text-p{
-  color:rgb(238, 238, 238);
+.text-p {
+  color: rgb(238, 238, 238);
 }

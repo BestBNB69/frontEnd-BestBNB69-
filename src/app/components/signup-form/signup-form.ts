@@ -1,0 +1,83 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { AfterViewInit, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { Authservice } from '../../services/authservice/authservice';
+import { LOGIN_ALREADY_USED_TYPE, EMAIL_ALREADY_USED_TYPE } from '../../config/error.constants';
+
+@Component({
+  selector: 'app-signup-form',
+  standalone: true,
+  imports: [RouterModule, FormsModule, ReactiveFormsModule],
+  templateUrl: './signup-form.html',
+  styleUrl: './signup-form.css',
+})
+export class SignupForm implements AfterViewInit {
+  login = viewChild.required<ElementRef>('username');
+
+  doNotMatch = signal(false);
+  error = signal(false);
+  errorEmailExists = signal(false);
+  errorUserExists = signal(false);
+  success = signal(false);
+  errorMessage = signal('');
+
+  registerForm = new FormGroup({
+    username: new FormControl('', {
+      nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(50),
+        Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
+      ],
+    }),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email],
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+    }),
+    confirmPassword: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+    }),
+  });
+
+  private registerService = inject(Authservice);
+
+  ngAfterViewInit(): void {
+    this.login().nativeElement.focus();
+  }
+
+  register(): void {
+    this.doNotMatch.set(false);
+    this.error.set(false);
+    this.errorEmailExists.set(false);
+    this.errorUserExists.set(false);
+
+    const { password, confirmPassword } = this.registerForm.getRawValue();
+    if (password !== confirmPassword) {
+      this.doNotMatch.set(true);
+    } else {
+      const { username, email } = this.registerForm.getRawValue();
+      this.registerService
+        .register({ username, email, password })
+        .subscribe({ next: () => this.success.set(true), error: response => this.processError(response) });
+    }
+  }
+
+  private processError(response: HttpErrorResponse): void {
+    if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
+      this.errorUserExists.set(true);
+    } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
+      this.errorEmailExists.set(true);
+    } else {
+      this.error.set(true);
+      this.errorMessage.set(response.message)
+      console.log(response.headers)
+    }
+  }
+}

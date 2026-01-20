@@ -1,0 +1,42 @@
+<div class="containe min-h-screen py-10 px-4">
+  @if (listing) {
+    <div class="containei max-w-5xl mx-auto rounded-xl shadow-xl p-6 md:p-10">
+      <h1 class="text-3xl font-bold mb-4">{{ listing?.title }}</h1>
+  
+      <!-- Galerie -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <img *ngFor="let img of listing?.images" [src]="img" alt="Photo annonce" class="rounded-lg object-cover w-full h-64" />
+      </div>
+  
+      <!-- Description -->
+      <p class="description font-bold mb-4">{{ listing?.description }}</p>
+  
+      <!-- Infos principales -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div><strong>Prix :</strong> {{ listing?.price }} € / nuit</div>
+        <div><strong>Capacité :</strong> {{ listing?.capacity }} personnes</div>
+        <div><strong>Localisation :</strong> {{ listing?.city }}, {{ listing?.country }}</div>
+        <div><strong>Type :</strong> {{ listing?.type }}</div>
+      </div>
+  
+      <!-- Calendrier simple -->
+      <div class="mb-6">
+        <label class="block font-semibold mb-2">Dates disponibles</label>
+        <div class="grid grid-cols-7 gap-2 text-center">
+          @for (day of listing.availability; track $index) {
+              <div class="p-2 border rounded-lg" [ngClass]="{'bg-green-100': day.available, 'bg-red-100': !day.available}">
+                {{ day.date | date:'dd/MM' }}
+              </div>
+          }
+        </div>
+      </div>
+  
+      <!-- Bouton réservation -->
+      <div class="text-center">
+        <button class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition font-semibold">
+          Réserver maintenant
+        </button>
+      </div>
+    </div>
+  }
+</div>
