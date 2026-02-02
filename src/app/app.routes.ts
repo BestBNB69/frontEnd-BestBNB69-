@@ -21,13 +21,13 @@ export const routes: Routes = [
 
     {
         path: 'listings',
-        canActivate: [Authguard],
+       // canActivate: [Authguard],
         component: LandingPage
     },
     {
         path: 'listings/:id',
         component: Listing,
-        canActivate: [Authguard],
+        //canActivate: [Authguard],
         title: "Details",
     },
     {
