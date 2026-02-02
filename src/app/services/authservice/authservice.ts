@@ -50,8 +50,8 @@ export class Authservice {
 
   logout(): void {
     this.clearStorage();
-    this.isLoggedIn$.next(false);
-    this.roles$.next([]);
+    // this.isLoggedIn$.next(false);
+    // this.roles$.next([]);
     this.router.navigate(['/auth/login']);
   }
 
