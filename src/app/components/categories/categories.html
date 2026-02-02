@@ -1,11 +1,11 @@
-<section class="border-b border-border-color">
+<section class="cat border-b border-border-color">
   <div class="max-w-[1760px] mx-auto px-10 py-10">
     <div class="flex gap-8 overflow-x-auto pb-4">
       @for (category of categories; track $index){
-        <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-b-2 hover:border-light-gray transition border-b-2 "
+        <div class="flex flex-col items-center gap-2 min-w-[80px] cursor-pointer p-3 rounded-xl hover:border-blue-400 transition border-b-2 "
              [ngClass]="category.first ? 'border-dark-gray' : 'border-transparent'">
           <div class="text-2xl opacity-100">{{category.icone}}</div>
-          <span class="text-xs font-medium text-medium-gray whitespace-nowrap">{{category.name}}</span>
+          <span class="text-xs font-medium text-blue-500 whitespace-nowrap">{{category.name}}</span>
         </div>
       }
     </div>

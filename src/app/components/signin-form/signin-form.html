@@ -1,0 +1,63 @@
+<div class="containe min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white shadow-xl rounded-xl max-w-4xl w-full flex overflow-hidden bang">
+    <div class="Auth w-full md:w-1/2 p-8">
+      <h1 data-cy="loginTitle" class="text-2xl font-bold text-center mb-6">Authentification</h1>
+      @if (authenticationError()) {
+        <div class="alert alert-dangerbg-red-100 text-red-700 p-3 rounded mb-4 text-center" data-cy="loginError">
+          <strong>Erreur d&apos;authentification !</strong> Veuillez vérifier vos identifiants de connexion.
+        </div>
+      }
+      <form class="form" (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="mb-4">
+          <label class="email-label block text-gray-700 font-semibold mb-2" for="email">Adresse Mail</label>
+          <input
+            type="text"
+            class="form-control w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="email"
+            id="email"
+            placeholder="Votre nom d'utilisateur"
+            formControlName="email"
+            data-cy="email"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="block text-gray-700 font-semibold mb-2">Mot de passe</label>
+          <input
+            type="password"
+            class="form-control w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="password"
+            id="password"
+            placeholder="Votre mot de passe"
+            formControlName="password"
+            data-cy="password"
+          />
+        </div>
+
+        <div class="form-check flex items-center mb-6">
+          <label class="form-check-label" for="rememberMe">
+            <input class="form-check-input mr-2 accent-blue-500" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe" />
+            <span class="text-gray-700 select-none">Garder la session ouverte</span>
+          </label>
+        </div>
+        <div class="text-center">
+          <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition" data-cy="submit">Connexion</button>
+        </div>
+      </form>
+      <!-- <div class="mt-3 alert alert-warning">
+        <a class="alert-link" routerLink="/account/reset/request" data-cy="forgetYourPasswordSelector">
+          Avez-vous oublié votre mot de passe ?
+        </a>
+      </div> -->
+
+      <div class="alert alert-warning mt-6 text-center text-gray-600">
+        <p id="question">Vous n&apos;avez pas encore de compte ? <br /></p>
+        <a class="alert-link text-blue-600 hover:underline font-medium" routerLink="/auth/register">Créer un compte</a>
+      </div>
+    </div>
+    <div class="Picture hidden md:block md:w-1/2">
+      <img src="Logo_0.png" alt="Logo" class="pic" />
+    </div>
+  </div>
+</div>
+

@@ -4,13 +4,17 @@ import {SearchDestination} from '../../components/search-destination/search-dest
 import {ListingAnnoucement} from '../../components/listing-annoucement/listing-annoucement';
 import {ListingAnnoucementModel} from '../../models/listing-annoucement-model';
 import {Categories} from '../../components/categories/categories';
+import { Header } from '../../components/header/header';
+import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-landing-page',
   imports: [
     SearchDestination,
     ListingAnnoucement,
-    Categories
+    Categories,
+    Header,
+    Footer
   ],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.css',
