@@ -1,9 +1,11 @@
 export interface ListingAnnoucementModel {
   picture: string;
-  city: string;
+  City: string;
+  PostalCode?: string;
+  Country: string;
   rating: number;
   icone: string;
-  description: string;
-  date: string;
-  price: number;
+  Description: string;
+  Date: string;
+  Price: number;
 }

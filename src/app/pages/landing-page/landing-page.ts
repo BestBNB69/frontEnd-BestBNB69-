@@ -28,12 +28,12 @@ export class LandingPage {
   ]
 
   listing_annoucement : ListingAnnoucementModel[] = [
-    {picture: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600', city: 'Nice, France', rating: 4.95, icone: '⭐', description: 'Villa avec vue mer', date: '15-20 mai', price: 250 },
-    {picture: '',  city: '', rating: 0, icone: '', description: '', date: '', price: 0 },
-    {picture: '',  city: '', rating: 0, icone: '', description: '', date: '', price: 0 },
-    {picture: '',  city: '', rating: 0, icone: '', description: '', date: '', price: 0 },
-    {picture: '',  city: '', rating: 0, icone: '', description: '', date: '', price: 0 },
-    {picture: '',  city: '', rating: 0, icone: '', description: '', date: '', price: 0 }
+    {picture: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600', City: 'Nice, France', rating: 4.95, icone: '⭐', Description: 'Villa avec vue mer', Date: '15-20 mai', Price: 250, Country:"France" },
+    {picture: '',  City: '', rating: 0, icone: '', Description: '', Date: '', Price: 0, Country:"" },
+    {picture: '',  City: '', rating: 0, icone: '', Description: '', Date: '', Price: 0,Country:"" },
+    {picture: '',  City: '', rating: 0, icone: '', Description: '', Date: '', Price: 0,Country:"" },
+    {picture: '',  City: '', rating: 0, icone: '', Description: '', Date: '', Price: 0, Country:"" },
+    {picture: '',  City: '', rating: 0, icone: '', Description: '', Date: '', Price: 0, Country:"" }
   ]
 
 }
