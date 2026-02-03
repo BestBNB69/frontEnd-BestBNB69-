@@ -5,19 +5,12 @@ import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Header} from '../header/header';
 import {Footer} from '../footer/footer';
-
-interface DayCalendar {
-  date: Date;
-  day: number;
-  available: boolean;
-  selected: boolean;
-  inRange: boolean;
-  empty: boolean;
-}
+import {DayCalendar} from '../../models/calendar';
+import {ListingHeader} from '../listing-header/listing-header';
 
 @Component({
   selector: 'app-listing-details',
-  imports: [CommonModule, Header, Footer],
+  imports: [CommonModule, Header, Footer, ListingHeader],
   templateUrl: './listing-details.html',
   styleUrl: './listing-details.css',
 })

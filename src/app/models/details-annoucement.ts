@@ -1,17 +1,44 @@
+import {Host} from './host';
+
 export interface DetailsAnnoucement {
   id: number;
   title: string;
-  description: string;
+  type: string;
+  city: string;
+  country: string;
   price: number;
   capacity: number;
-  type: string;
-  city: string
-  country: string;
-  images : string[];
-  availability:Availability[]
+  bedrooms: number;
+  beds: number;
+  bathrooms: number;
+  description: string;
+  images: string[];
+  averageRating: number;
+  totalReviews: number;
+  availability : Availability[]
+  amenities: Amenity[];
+  host: Host;
+  rules: ListingRules;
+  ratings: number;
 }
 
 export interface Availability {
   date: string;
   available: boolean;
+}
+
+export interface Amenity {
+  id: number;
+  name: string;
+  icon: string;
+  available: boolean;
+}
+
+export interface ListingRules {
+  checkIn: string;
+  checkOut: string;
+  maxGuests: number;
+  cancellationPolicy: string;
+  houseRules: string[];
+  safetyRules: string[];
 }
