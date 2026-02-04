@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ListingAnnoucementModel} from '../../models/listing-annoucement-model';
+import {ListingAnnoucementModel} from '../../../models/listing-annoucement-model';
 
 @Component({
   selector: 'app-listing-annoucement',
