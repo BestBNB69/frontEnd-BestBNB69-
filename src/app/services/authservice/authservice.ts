@@ -68,11 +68,11 @@ export class Authservice {
 
   private storeAuth(res: AuthResponse): void {
     // console.log(res);
-    if (!res.token) {
+    if (!res.jwt) {
       console.error('NO TOKEN IN AUTH RESPONSE', res);
       return;
     }
-    localStorage.setItem('accessToken', res.token);
+    localStorage.setItem('accessToken', res.jwt);
 
     // if (res.refreshToken) {
     //   localStorage.setItem('refreshToken', res.refreshToken);

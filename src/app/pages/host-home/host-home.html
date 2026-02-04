@@ -1,10 +1,12 @@
-<app-host-layout></app-host-layout>
-<main class="content">
-    @if (Dashboards()) {
-        <app-host-dashboard></app-host-dashboard>
-    }@else if (Listings()) {
-        <app-host-listings></app-host-listings>
-    }@else if (Users()) {
-        <app-host-user></app-host-user>
-    }
-</main>
+<div class="host-container">
+    <app-host-layout></app-host-layout>
+    <main class="content">
+        @if (Dashboards()) {
+            <app-host-dashboard></app-host-dashboard>
+        }@else if (Listings()) {
+            <app-host-listings></app-host-listings>
+        }@else if (Users()) {
+            <app-host-user></app-host-user>
+        }
+    </main>
+</div>

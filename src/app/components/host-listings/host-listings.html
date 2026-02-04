@@ -1,14 +1,22 @@
-<h1>Listings</h1>
+<h1 class="text-2xl font-bold mb-6">Listings</h1>
 
-<!-- <button (click)="openCreate()">+ Add Listing</button> -->
+<button class="btn btn-primary w-auto md:w-1/5 bg-blue-600 text-white py-2 rounded-lg font-semibold
+                    hover:bg-blue-700 transition disabled:opacity-50" (click)="openCreate()">+ Add Listing</button>
 
 <table>
   <thead>
     <tr>
       <th>Title</th>
+      <th>Description</th>
       <th>City</th>
+      <th>Address</th>
+      <th>Postal</th>
       <th>Price</th>
-      <th>Active</th>
+      <th>hostName</th>
+      <th>Size</th>
+      <th>Location Tag</th>
+      <th>Equipment Tag</th>
+      <th>Last update</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -16,9 +24,16 @@
   <tbody>
     <!-- <tr *ngFor="let listing of listings">
       <td>{{ listing.title }}</td>
-      <td>{{ listing.city }}</td>
+      <td>{{ listing.description }}</td>
+      <td>{{ listing.city }}, {{ listing.country }}</td>
+      <td>{{ listing.address }}</td>
+      <td>{{ listing.postalcode }}</td>
       <td>{{ listing.pricePerNight }} €</td>
-      <td>{{ listing.active ? 'Yes' : 'No' }}</td>
+      <td>{{ listing.hostname }}</td>
+      <td>{{ listing.size }}</td>
+      <td>{{ listing.loctag }}</td>
+      <td>{{ listing.eqtag }}</td>
+      <td>{{ listing.update }}</td>
       <td>
         <button (click)="edit(listing)">Edit</button>
         <button class="danger" (click)="delete(listing.id)">Delete</button>
@@ -26,3 +41,7 @@
     </tr> -->
   </tbody>
 </table>
+
+@if (editPopup()) {
+  <app-listing-dialog (close)="closeCreate()"></app-listing-dialog>
+}

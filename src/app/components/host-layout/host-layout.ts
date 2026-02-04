@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Authservice } from '../../services/authservice/authservice';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-host-layout',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './host-layout.html',
   styleUrl: './host-layout.css',
 })
