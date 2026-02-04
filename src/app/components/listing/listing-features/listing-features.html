@@ -1,0 +1,15 @@
+<div class="py-8 border-b border-gray-200">
+  <div class="space-y-6">
+    @for (feature of features; track feature.title) {
+      <div class="flex gap-6">
+        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        <div>
+          <h3 class="font-semibold mb-1">{{ feature.title }}</h3>
+          <p class="text-gray-600 text-sm">{{ feature.description }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

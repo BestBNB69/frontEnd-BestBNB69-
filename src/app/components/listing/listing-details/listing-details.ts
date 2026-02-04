@@ -1,16 +1,19 @@
-import {DetailsAnnoucement} from '../../models/details-annoucement';
-import {ListingsService} from '../../services/listings/listings-service';
+import {DetailsAnnoucement} from '../../../models/details-annoucement';
+import {ListingsService} from '../../../services/listings/listings-service';
 import {ActivatedRoute} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Header} from '../header/header';
-import {Footer} from '../footer/footer';
-import {DayCalendar} from '../../models/calendar';
+import {Header} from '../../header/header';
+import {Footer} from '../../footer/footer';
+import {DayCalendar} from '../../../models/calendar';
 import {ListingHeader} from '../listing-header/listing-header';
+import {ListingGalery} from '../listing-galery/listing-galery';
+import {ListingHostInfo} from '../listing-host-info/listing-host-info';
+import {ListingFeatures} from '../listing-features/listing-features';
 
 @Component({
   selector: 'app-listing-details',
-  imports: [CommonModule, Header, Footer, ListingHeader],
+  imports: [CommonModule, Header, Footer, ListingHeader, ListingGalery, ListingHostInfo, ListingFeatures],
   templateUrl: './listing-details.html',
   styleUrl: './listing-details.css',
 })

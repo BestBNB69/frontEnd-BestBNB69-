@@ -6,75 +6,17 @@
   @if (listing) {
     <div class="max-w-[1120px] mx-auto px-6 lg:px-20 py-6">
 
-      <!-- Titre, étoiles, localisation, actions -->
       <app-listing-header [city]="listing.city" [country]="listing.country" [title]="listing.title" [rating]="listing.ratings" [totalReviews]="listing.totalReviews"></app-listing-header>
 
-      <!-- Galerie d'images style Airbnb avec bouton "Afficher toutes les photos" -->
+      <app-listing-galery [images]="listing.images"></app-listing-galery>
 
-
-      <!-- Contenu principal en 2 colonnes -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-24">
-
-        <!-- Colonne gauche : Infos -->
         <div class="lg:col-span-2">
 
-          <!-- En-tête avec avatar hôte -->
-          <div class="pb-6 border-b border-gray-200">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="text-[22px] font-semibold mb-1">
-                  {{ listing.type }} hébergé par Marie
-                </h2>
-                <p class="text-gray-600">{{ listing.capacity }} voyageurs · 2 chambres · 3 lits · 1 salle de bain</p>
-              </div>
-              <img src="https://via.placeholder.com/56" alt="Hôte" class="w-14 h-14 rounded-full"/>
-            </div>
-          </div>
+          <app-listing-host-info [type]="listing.type" [hostName]="listing.host.name" [capacity]="listing.capacity" [bedrooms]="listing.bedrooms" [bathrooms]="listing.bathrooms" [beds]="listing.beds"></app-listing-host-info>
 
           <!-- Points forts du logement -->
-          <div class="py-8 border-b border-gray-200">
-            <div class="space-y-6">
-              <div class="flex gap-6">
-                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-                <div>
-                  <h3 class="font-semibold mb-1">Logement entier</h3>
-                  <p class="text-gray-600 text-sm">Vous aurez le logement rien que pour vous.</p>
-                </div>
-              </div>
-
-              <div class="flex gap-6">
-                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <div>
-                  <h3 class="font-semibold mb-1">Emplacement exceptionnel</h3>
-                  <p class="text-gray-600 text-sm">100 % des voyageurs récents ont attribué 5 étoiles à l'emplacement.</p>
-                </div>
-              </div>
-
-              <div class="flex gap-6">
-                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
-                </svg>
-                <div>
-                  <h3 class="font-semibold mb-1">Arrivée autonome</h3>
-                  <p class="text-gray-600 text-sm">Vous pouvez faire l'arrivée de manière autonome avec le boîtier à clés.</p>
-                </div>
-              </div>
-
-              <div class="flex gap-6">
-                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
-                <div>
-                  <h3 class="font-semibold mb-1">Annulation gratuite avant le 8 mars</h3>
-                  <p class="text-gray-600 text-sm">Obtenez un remboursement intégral si vous changez d'avis.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-listing-features></app-listing-features>
 
           <!-- Description -->
           <div class="py-8 border-b border-gray-200">
