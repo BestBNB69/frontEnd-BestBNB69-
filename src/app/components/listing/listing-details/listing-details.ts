@@ -1,16 +1,16 @@
-import {DetailsAnnoucement} from '../../../models/details-annoucement';
-import {ListingsService} from '../../../services/listings/listings-service';
-import {ActivatedRoute} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {Header} from '../../header/header';
-import {Footer} from '../../footer/footer';
-import {DayCalendar} from '../../../models/calendar';
-import {ListingHeader} from '../listing-header/listing-header';
-import {ListingGalery} from '../listing-galery/listing-galery';
-import {ListingHostInfo} from '../listing-host-info/listing-host-info';
-import {ListingFeatures} from '../listing-features/listing-features';
-import {BookingCard} from '../../booking-card/booking-card';
+import { DetailsAnnoucement } from '../../../models/details-annoucement';
+import { ListingsService } from '../../../services/listings/listings-service';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Header } from '../../header/header';
+import { Footer } from '../../footer/footer';
+import { DayCalendar } from '../../../models/calendar';
+import { ListingHeader } from '../listing-header/listing-header';
+import { ListingGalery } from '../listing-galery/listing-galery';
+import { ListingHostInfo } from '../listing-host-info/listing-host-info';
+import { ListingFeatures } from '../listing-features/listing-features';
+import { BookingCard } from '../../booking-card/booking-card';
 
 @Component({
   selector: 'app-listing-details',
@@ -33,7 +33,7 @@ export class ListingDetails implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly listingsService: ListingsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -44,10 +44,10 @@ export class ListingDetails implements OnInit {
   }
 
   loadListing() {
-    this.listingsService.getListing(this.id).subscribe(res => {
-      this.listing = res;
-      this.loading = false;
-    });
+    // this.listingsService.getListing(this.id).subscribe(res => {
+    //   this.listing = res;
+    //   this.loading = false;
+    // });
   }
 
 
