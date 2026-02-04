@@ -10,10 +10,11 @@ import {ListingHeader} from '../listing-header/listing-header';
 import {ListingGalery} from '../listing-galery/listing-galery';
 import {ListingHostInfo} from '../listing-host-info/listing-host-info';
 import {ListingFeatures} from '../listing-features/listing-features';
+import {BookingCard} from '../../booking-card/booking-card';
 
 @Component({
   selector: 'app-listing-details',
-  imports: [CommonModule, Header, Footer, ListingHeader, ListingGalery, ListingHostInfo, ListingFeatures],
+  imports: [CommonModule, Header, Footer, ListingHeader, ListingGalery, ListingHostInfo, ListingFeatures, BookingCard],
   templateUrl: './listing-details.html',
   styleUrl: './listing-details.css',
 })

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import {Feature} from '../../../models/features';
+import {LucideAngularModule} from 'lucide-angular';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-listing-features',
-  imports: [],
+  imports: [LucideAngularModule, MatIcon],
   templateUrl: './listing-features.html',
   styleUrl: './listing-features.css',
 })
@@ -25,7 +27,7 @@ export class ListingFeatures {
       description: 'Vous pouvez faire l\'arrivée de manière autonome avec le boîtier à clés.'
     },
     {
-      icon: 'calendar',
+      icon: 'calendar_today',
       title: 'Annulation gratuite avant le 8 mars',
       description: 'Obtenez un remboursement intégral si vous changez d\'avis.'
     }
