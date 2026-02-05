@@ -22,9 +22,10 @@ export class Authguard {
       expDate = new Date(payload.exp * 1000);
     }
     console.log(expDate)
-    if (!this.auth.isAuthenticated()
-      //  || expDate < new Date()
-    ) {
+    if (expDate < new Date()) {
+      this.auth.logout()
+    }
+    if (!this.auth.isAuthenticated()) {
       this.router.navigate(['/auth/login']);
       return false;
     }

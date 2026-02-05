@@ -4,6 +4,7 @@ import { Roleguard } from './services/roleguard/roleguard';
 import { Signin } from './pages/signin/signin';
 import { Listing } from './pages/listing/listing';
 import { LandingPage } from './pages/landing-page/landing-page';
+import { HostHome } from './pages/host-home/host-home';
 
 export const routes: Routes = [
 
@@ -38,8 +39,12 @@ export const routes: Routes = [
 
     {
         path: 'host',
-        canActivate: [Roleguard],
+        canActivate: [Authguard],
         data: { roles: ['HOST', 'CO_HOST'] },
-        component: Signin // 🔧 TEMPORAIRE
+        children: [
+            { path: 'dashboard', component: HostHome, title: "Dashboard" },
+            { path: 'listings', component: HostHome, title: "Listings" },
+            { path: 'users', component: HostHome, title: "Users" }
+        ]
     }
 ];

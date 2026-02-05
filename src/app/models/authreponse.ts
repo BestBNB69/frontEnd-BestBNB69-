@@ -3,5 +3,5 @@ export interface AuthResponse {
     Message?: string;
     error?: string;
     // roles: string[];
-    token: string;
+    jwt: string;
 }
