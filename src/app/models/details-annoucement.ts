@@ -28,10 +28,8 @@ export interface Availability {
 }
 
 export interface Amenity {
-  id: number;
   name: string;
   icon: string;
-  available: boolean;
 }
 
 export interface ListingRules {
