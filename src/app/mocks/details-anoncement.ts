@@ -40,9 +40,10 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
       { id: 4, name: "Détecteur de fumée", icon: "smoke", available: false }
     ],
 
-    host: {
-      id: 1,
-      name: "Marie",
+    hostInfo: {
+      hostId: "kldksllds",
+      hostName: "Marie",
+      hostEmail: "",
       photo: "https://via.placeholder.com/112",
       joinedYear: 2019,
       isVerified: true,

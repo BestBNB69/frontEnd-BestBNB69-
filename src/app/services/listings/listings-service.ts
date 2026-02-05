@@ -15,6 +15,10 @@ export class ListingsService {
     return this.http.get(`${this.apiUrl}`);
   }
 
+  getDashListings(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/dash`);
+  }
+
   getListing(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }

@@ -34,6 +34,10 @@ export class ListingDialog {
       nonNullable: true,
       validators: [Validators.required],
     }),
+    max: new FormControl(0, {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   })
 
   form = {

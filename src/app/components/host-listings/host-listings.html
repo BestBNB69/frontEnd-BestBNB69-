@@ -12,7 +12,7 @@
       <th>Address</th>
       <th>Postal</th>
       <th>Price</th>
-      <th>hostName</th>
+      <th>HostNames</th>
       <th>Size</th>
       <th>Location Tag</th>
       <th>Equipment Tag</th>
@@ -22,23 +22,27 @@
   </thead>
 
   <tbody>
-    <!-- <tr *ngFor="let listing of listings">
-      <td>{{ listing.title }}</td>
-      <td>{{ listing.description }}</td>
-      <td>{{ listing.city }}, {{ listing.country }}</td>
-      <td>{{ listing.address }}</td>
-      <td>{{ listing.postalcode }}</td>
-      <td>{{ listing.pricePerNight }} €</td>
-      <td>{{ listing.hostname }}</td>
-      <td>{{ listing.size }}</td>
-      <td>{{ listing.loctag }}</td>
-      <td>{{ listing.eqtag }}</td>
-      <td>{{ listing.update }}</td>
-      <td>
-        <button (click)="edit(listing)">Edit</button>
-        <button class="danger" (click)="delete(listing.id)">Delete</button>
-      </td>
-    </tr> -->
+    @for (listing of listingAnnoucement; track $index) {
+      <tr>
+        <td>{{ listing.title }}</td>
+        <td>{{ listing.description }}</td>
+        <td>{{ listing.city }}, {{ listing.country }}</td>
+        <td>{{ listing.address }}</td>
+        <td>{{ listing.postalCode }}</td>
+        <td>{{ listing.pricePerNight }} €</td>
+        <td>{{ listing.hostnames }}</td>
+        <td>{{ listing.surface }} m²</td>
+        <td>{{ listing.locationT }}</td>
+        <td>{{ listing.equipmentT }}</td>
+        <td>{{ listing.updatedAt }}</td>
+        <td>
+          <!-- <button (click)="edit(listing)">Edit</button>
+          <button class="danger" (click)="delete(listing.id)">Delete</button> -->
+          <button>Edit</button>
+          <button class="danger">Delete</button>
+        </td>
+      </tr>
+    }
   </tbody>
 </table>
 

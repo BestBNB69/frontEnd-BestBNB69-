@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ElementRef, inject, signal, viewChild
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Authservice } from '../../services/authservice/authservice';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -10,7 +11,7 @@ import { Authservice } from '../../services/authservice/authservice';
   templateUrl: './signin-form.html',
   styleUrl: './signin-form.css',
 })
-export class SigninForm implements OnInit, AfterViewInit {
+export class SigninForm implements AfterViewInit {
 
   email = viewChild.required<ElementRef>('email')
 
@@ -23,17 +24,7 @@ export class SigninForm implements OnInit, AfterViewInit {
   });
 
   private loginService = inject(Authservice);
-  private router = inject(Router);
-
-  ngOnInit(): void {
-    // if already authenticated then navigate to home page
-
-    // this.accountService.identity().subscribe(() => {
-    //   if (this.accountService.isAuthenticated()) {
-    //     this.router.navigate(['']);
-    //   }
-    // });
-  }
+  public errorResponse: HttpErrorResponse = new HttpErrorResponse({});
 
   ngAfterViewInit(): void {
     this.email().nativeElement.focus();
@@ -45,7 +36,13 @@ export class SigninForm implements OnInit, AfterViewInit {
         // this.authenticationError.set(false);
         // this.router.navigate(['/listings/1']);
       },
-      error: () => this.authenticationError.set(true),
+      error: (res: HttpErrorResponse) => {
+        this.authenticationError.set(true);
+        if (res.error != undefined) {
+          this.errorResponse = res
+          console.log(this.errorResponse)
+        }
+      },
     });
   }
 }

@@ -1,7 +1,7 @@
 import { DetailsAnnoucement } from '../../../models/details-annoucement';
 import { ListingsService } from '../../../services/listings/listings-service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Header } from '../../header/header';
 import { Footer } from '../../footer/footer';
@@ -20,7 +20,8 @@ import { BookingCard } from '../../booking-card/booking-card';
 })
 export class ListingDetails implements OnInit {
   listing: DetailsAnnoucement | undefined;
-  id!: number;
+  id!: string;
+  routeA!: string | null;
   loading = true;
   error = false;
   showCalendar = false;
@@ -32,11 +33,17 @@ export class ListingDetails implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly listingsService: ListingsService
+    private readonly listingsService: ListingsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.routeA = this.route.snapshot.paramMap.get('id')
+    if (this.routeA != null) {
+      this.id = this.routeA;
+    } else {
+      this.id = "";
+    }
     this.loadListing();
     this.currentMonth = new Date();
     this.nextMonth = new Date(this.currentMonth);
@@ -44,10 +51,12 @@ export class ListingDetails implements OnInit {
   }
 
   loadListing() {
-    // this.listingsService.getListing(this.id).subscribe(res => {
-    //   this.listing = res;
-    //   this.loading = false;
-    // });
+    this.listingsService.getListing(this.id).subscribe(res => {
+      this.listing = res.listing;
+      this.loading = false;
+      console.log(this.listing)
+      this.cdr.detectChanges();
+    });
   }
 
 

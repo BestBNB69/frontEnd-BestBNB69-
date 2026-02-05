@@ -42,9 +42,9 @@ export const routes: Routes = [
         canActivate: [Authguard],
         // data: { roles: ['HOST', 'CO_HOST'] },
         children: [
-            { path: 'dashboard', component: HostHome, title: "Dashboard" },
-            { path: 'listings', component: HostHome, title: "Listings" },
-            { path: 'users', component: HostHome, title: "Users" }
+            { path: 'dashboard', component: HostHome, title: "Host-Dashboard" },
+            { path: 'listings', component: HostHome, title: "Host-Listings" },
+            { path: 'users', component: HostHome, title: "Host-Users" }
         ]
     }
 ];
