@@ -1,0 +1,56 @@
+<div class="h-full bg-white flex flex-col">
+  @if (conversationId) {
+    <div class="p-4 border-b border-border-color bg-gray-50">
+      <h2 class="text-lg font-semibold text-dark-gray">Conversation</h2>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-4 space-y-4" #messagesContainer>
+      @for (message of messages; track message.id) {
+        <div
+          class="flex"
+          [class.justify-end]="message.sender_id === currentUserId">
+          <div
+            class="max-w-[70%] rounded-2xl px-4 py-2"
+            [class.bg-primary]="message.sender_id === currentUserId"
+            [class.text-white]="message.sender_id === currentUserId"
+            [class.bg-gray-100]="message.sender_id !== currentUserId"
+            [class.text-dark-gray]="message.sender_id !== currentUserId">
+            <p class="text-sm whitespace-pre-wrap break-words">{{ message.content }}</p>
+            <p
+              class="text-xs mt-1 opacity-70"
+              [class.text-white]="message.sender_id === currentUserId"
+              [class.text-medium-gray]="message.sender_id !== currentUserId">
+              {{ formatTime(message.created_at) }}
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="p-4 border-t border-border-color bg-gray-50">
+      <form (submit)="sendMessage($event)" class="flex gap-2">
+        <input
+          type="text"
+          [(ngModel)]="newMessage"
+          name="message"
+          placeholder="Écrivez votre message..."
+          class="flex-1 px-4 py-3 border border-light-gray rounded-full text-sm outline-none focus:border-primary transition"
+          [disabled]="isSending">
+        <button
+          type="submit"
+          [disabled]="!newMessage.trim() || isSending"
+          class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed">
+          Envoyer
+        </button>
+      </form>
+    </div>
+  } @else {
+    <div class="flex-1 flex items-center justify-center text-center p-8">
+      <div>
+        <div class="text-6xl mb-4">💬</div>
+        <h3 class="text-xl font-semibold text-dark-gray mb-2">Messagerie</h3>
+        <p class="text-medium-gray">Sélectionnez une conversation pour commencer</p>
+      </div>
+    </div>
+  }
+</div>
