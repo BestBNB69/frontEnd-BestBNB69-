@@ -1,0 +1,13 @@
+<div class="py-8 border-b border-gray-200">
+  <h3 class="text-[22px] font-semibold mb-6">Ce que propose ce logement</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    @for (amenity of amenities?.amenities; track $index){
+      <div class="flex items-center gap-4">
+        <mat-icon class="w-6 h-6">{{amenity.icon}}</mat-icon>
+        <span>{{ amenity.name }}</span>
+      </div>
+    }
+  <button class="mt-6 border border-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
+    Afficher les {{ 28 }} équipements
+  </button>
+</div>

@@ -11,10 +11,14 @@ import {ListingGalery} from '../listing-galery/listing-galery';
 import {ListingHostInfo} from '../listing-host-info/listing-host-info';
 import {ListingFeatures} from '../listing-features/listing-features';
 import {BookingCard} from '../../booking-card/booking-card';
+import {ListingAmenity} from '../listing-amenity/listing-amenity';
+import {ListingDatepicker} from '../listing-datepicker/listing-datepicker';
+import {ListingComment} from '../listing-comment/listing-comment';
+import {Maps} from '../../maps/maps';
 
 @Component({
   selector: 'app-listing-details',
-  imports: [CommonModule, Header, Footer, ListingHeader, ListingGalery, ListingHostInfo, ListingFeatures, BookingCard],
+  imports: [CommonModule, Header, Footer, ListingHeader, ListingGalery, ListingHostInfo, ListingFeatures, BookingCard, ListingAmenity, ListingDatepicker, ListingComment, Maps],
   templateUrl: './listing-details.html',
   styleUrl: './listing-details.css',
 })
