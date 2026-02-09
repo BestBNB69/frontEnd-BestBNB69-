@@ -34,10 +34,12 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
     ],
 
     amenities: [
-      { id: 1, name: "Wifi", icon: "wifi", available: true },
-      { id: 2, name: "Cuisine", icon: "kitchen", available: true },
-      { id: 3, name: "Climatisation", icon: "ac", available: true },
-      { id: 4, name: "Détecteur de fumée", icon: "smoke", available: false }
+      { name: "Wifi", icon: "perm_scan_wififi" },
+      { name: "Cuisine", icon: "kitchen" },
+      { name: "TV", icon: "tv"},
+      {name: "Parking", icon: "local_parking"},
+      { name: "Climatisation", icon: "toys", },
+      { name: "Non fumeur", icon: "smoke_free", }
     ],
 
     hostInfo: {
