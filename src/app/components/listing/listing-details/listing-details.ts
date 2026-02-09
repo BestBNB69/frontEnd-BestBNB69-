@@ -37,6 +37,8 @@ export class ListingDetails implements OnInit {
   nextMonth: Date = new Date();
   numberOfNights = 0;
   public short = true;
+  averageRating = 0;
+  totalReviews = 0;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -70,6 +72,8 @@ export class ListingDetails implements OnInit {
       if (this.listing?.hostInfo.joinedYear) {
         this.listing.hostInfo.joinedYear = new Date(this.listing.hostInfo.joinedYear).getFullYear().toString()
       }
+      this.averageRating = this.listing?.averageRating ?? 0;
+      this.totalReviews = this.listing?.totalReviews ?? 0;
       console.log(this.listing)
       this.cdr.detectChanges();
     });
