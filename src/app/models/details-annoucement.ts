@@ -12,7 +12,7 @@ export interface DetailsAnnoucement {
   beds: number;
   bathrooms: number;
   description: string;
-  images: string[];
+  photos: string[];
   averageRating: number;
   totalReviews: number;
   availability: Availability[]

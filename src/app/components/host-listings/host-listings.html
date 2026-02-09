@@ -21,31 +21,32 @@
     </tr>
   </thead>
 
-  <tbody>
-    @for (listing of listingAnnoucement; track $index) {
-      <tr>
-        <td>{{ listing.title }}</td>
-        <td>{{ listing.description }}</td>
-        <td>{{ listing.city }}, {{ listing.country }}</td>
-        <td>{{ listing.address }}</td>
-        <td>{{ listing.postalCode }}</td>
-        <td>{{ listing.pricePerNight }} €</td>
-        <td>{{ listing.hostnames }}</td>
-        <td>{{ listing.surface }} m²</td>
-        <td>{{ listing.locationT }}</td>
-        <td>{{ listing.equipmentT }}</td>
-        <td>{{ listing.updatedAt }}</td>
-        <td>
-          <!-- <button (click)="edit(listing)">Edit</button>
-          <button class="danger" (click)="delete(listing.id)">Delete</button> -->
-          <button>Edit</button>
-          <button class="danger">Delete</button>
-        </td>
-      </tr>
-    }
-  </tbody>
+  @if (!loading) {
+    <tbody>
+      @for (listing of listingAnnoucement; track $index) {
+        <tr>
+          <td>{{ listing.title }}</td>
+          <td>{{ listing.description }}</td>
+          <td>{{ listing.city }}, {{ listing.country }}</td>
+          <td>{{ listing.address }}</td>
+          <td>{{ listing.postalCode }}</td>
+          <td>{{ listing.pricePerNight }} €</td>
+          <td>{{ listing.hostnames }}</td>
+          <td>{{ listing.surface }} m²</td>
+          <td>{{ listing.locationT }}</td>
+          <td>{{ listing.equipmentT }}</td>
+          <td>{{ listing.updatedAt }}</td>
+          <td>
+            <button (click)="openEdit(listing)">Edit</button>
+            <button class="danger" (click)="delete(listing.id)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  }
 </table>
 
 @if (editPopup()) {
-  <app-listing-dialog (close)="closeCreate()"></app-listing-dialog>
+  <app-listing-dialog [showModal]="editPopup()"
+  [isEdit]="isEdit" [listing]="selectedListing" (close)="closeCreate()"></app-listing-dialog>
 }

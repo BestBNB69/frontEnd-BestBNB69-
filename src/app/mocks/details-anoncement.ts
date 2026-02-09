@@ -16,7 +16,7 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
 
     description: "Appartement moderne avec 2 chambres, proche du centre-ville.",
 
-    images: [
+    photos: [
       "img01.png",
       "img02.jpg",
       "img03.jpg",

@@ -1,14 +1,14 @@
 export interface ListingsModel {
   id: string;
   title: string;
-  images?: string[] | null;
+  description: string;
   city: string;
+  address: string;
   postalCode?: string;
   country: string;
-  address: string;
-  rating: number;
+  photos?: any[] | null;
+  // rating: number;
   // icone: string;
-  description: string;
   hostnames: string[];
   // Date: string;
   updatedAt: string;

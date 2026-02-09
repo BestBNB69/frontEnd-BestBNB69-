@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
-import { DetailsAnnoucement } from '../../models/details-annoucement';
-import { DETAILS_ANNONCEMENT } from '../../mocks/details-anoncement';
+import { Observable, tap } from 'rxjs';
+import { ListingsDTO } from '../../models/listingsDTO';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,11 @@ import { DETAILS_ANNONCEMENT } from '../../mocks/details-anoncement';
 export class ListingsService {
   private apiUrl = 'http://localhost:5235/api/listings';
   constructor(private http: HttpClient) { }
+
+  private token = localStorage.getItem('token');
+  private headers = new HttpHeaders({
+    Authorization: `Bearer ${this.token}`
+  });
 
   getAllListings(): Observable<any> {
     return this.http.get(`${this.apiUrl}`);
@@ -21,6 +26,62 @@ export class ListingsService {
 
   getListing(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  createListing(data: any): Observable<any> {
+    const newRes: ListingsDTO = {
+      title: data.title,
+      description: data.description,
+      city: data.city,
+      country: data.country,
+      address: data.address,
+      postalCode: data.postal,
+      pricePerNight: data.price,
+      maxGuests: data.max,
+      surface: data.size,
+      available: true,
+      location: [0],
+      amenities: [0]
+    };
+    return this.http.post<ListingsDTO>(`${this.apiUrl}`, newRes, {
+      headers: this.headers
+    })
+      .pipe(tap(res => {
+        // this.storeAuth(res);
+        // this.redirectAfterLogin();
+      })
+      );
+  }
+
+  updateListing(data: any, id: string): Observable<any> {
+    const newRes: ListingsDTO = {
+      title: data.title,
+      description: data.description,
+      city: data.city,
+      country: data.country,
+      address: data.address,
+      postalCode: data.postal,
+      pricePerNight: data.price,
+      maxGuests: data.max,
+      surface: data.size,
+      available: true,
+      location: [0],
+      amenities: [0]
+    };
+    return this.http.put<ListingsDTO>(`${this.apiUrl}/${id}`, newRes, {
+      headers: this.headers
+    })
+      .pipe(tap(res => {
+        // this.storeAuth(res);
+        // this.redirectAfterLogin();
+      })
+      );
+  }
+
+  deleteListing(id: string): Observable<any> {
+    return this.http.delete<ListingsDTO>(`${this.apiUrl}/${id}`, {
+      headers: this.headers
+    });
   }
 
   // getAllListings(): Observable<DetailsAnnoucement[]> {
