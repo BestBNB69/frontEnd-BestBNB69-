@@ -9,7 +9,7 @@ import { LoginDto, LoginBackDto, RegisterDto, RegisterBackDto } from '../../mode
   providedIn: 'root',
 })
 export class Authservice {
-  private readonly API_URL = 'http://localhost:4200/api';
+  private readonly API_URL = 'http://localhost:8080/api';
 
   private isLoggedIn$ = new BehaviorSubject<boolean>(this.hasToken());
   private roles$ = new BehaviorSubject<string[]>(this.getStoredRoles());
@@ -39,7 +39,7 @@ export class Authservice {
       EmailAddress: data.email,
       PasswordHash: data.password
     };
-    return this.http.post<AuthResponse>(`${this.API_URL}/Users/Register`, newRes)
+    return this.http.post<AuthResponse>(`${this.API_URL}/users/register`, newRes)
       .pipe(
         tap(res => {
           this.storeAuth(res);

@@ -1,6 +1,6 @@
 import {DetailsAnnoucement} from '../../../models/details-annoucement';
 import {ListingsService} from '../../../services/listings/listings-service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Header} from '../../header/header';
@@ -15,6 +15,7 @@ import {ListingAmenity} from '../listing-amenity/listing-amenity';
 import {ListingDatepicker} from '../listing-datepicker/listing-datepicker';
 import {ListingComment} from '../listing-comment/listing-comment';
 import {Maps} from '../../maps/maps';
+import {MessagingService} from '../../../services/messaging.service';
 
 @Component({
   selector: 'app-listing-details',
@@ -36,7 +37,9 @@ export class ListingDetails implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly listingsService: ListingsService
+    private readonly listingsService: ListingsService,
+    private readonly messagingService: MessagingService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -53,6 +56,20 @@ export class ListingDetails implements OnInit {
       this.loading = false;
     });
   }
+  contactHost() {
+    if (!this.listing) return;
+
+    const conversation =
+      this.messagingService.getOrCreateConversationForListing(
+        this.listing.id,
+        this.listing.host.name
+      );
+
+    this.messagingService.selectConversation(conversation.id);
+
+    this.router.navigate(['/messages']);
+  }
+
 
 
   getDaysInMonth(date: Date): DayCalendar[] {

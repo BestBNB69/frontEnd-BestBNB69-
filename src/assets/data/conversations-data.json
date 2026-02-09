@@ -1,0 +1,48 @@
+{
+  "conversations": [
+    {
+      "id": "conv-1",
+      "listingId": 101,
+      "participants": ["current-user", "Sophie Dubois"],
+      "reservation": {
+        "listingId": 101,
+        "userId": "current-user",
+        "startDate": "2026-02-15",
+        "endDate": "2026-02-18",
+        "status": "confirmed"
+      },
+      "last_message": "D'accord, à bientôt !",
+      "last_message_time": "2026-02-09T14:30:00.000Z",
+      "messages": [
+        {
+          "id": "msg-1",
+          "sender_id": "current-user",
+          "sender_name": "Vous",
+          "content": "Bonjour Sophie, j'ai vu votre annonce",
+          "timestamp": "2026-02-09T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "conv-2",
+      "listingId": 102,
+      "participants": ["current-user", "Marc Leroy"],
+      "reservation": {
+        "listingId": 102,
+        "userId": "current-user",
+        "startDate": "2026-03-01",
+        "endDate": "2026-03-05",
+        "status": "pending"
+      },
+      "last_message": "Merci beaucoup !",
+      "last_message_time": "2026-02-08T18:45:00.000Z",
+      "messages": []
+    },
+    {
+      "id": "conv-3",
+      "listingId": 103,
+      "participants": ["current-user", "Julie Martin"],
+      "messages": []
+    }
+  ]
+}
