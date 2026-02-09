@@ -2,12 +2,12 @@ import { DetailsAnnoucement } from '../models/details-annoucement';
 
 export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
   {
-    id: 1,
+    id: "1",
     title: "Appartement lumineux à Paris",
     type: "Appartement",
     city: "Paris",
     country: "France",
-    price: 80,
+    pricePerNight: 80,
     capacity: 4,
 
     bedrooms: 2,
@@ -17,11 +17,47 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
     description: "Appartement moderne avec 2 chambres, proche du centre-ville.",
 
     photos: [
-      "img01.png",
-      "img02.jpg",
-      "img03.jpg",
-      "img04.jpg",
-      "img05.jpg"
+      {
+        createdAt: "",
+        id: "",
+        imageUrl: "img01.png",
+        isCover: true,
+        listingId: "",
+        order: 0
+      },
+      {
+        createdAt: "",
+        id: "",
+        imageUrl: "img02.jpg",
+        isCover: true,
+        listingId: "",
+        order: 0
+      },
+      {
+        createdAt: "",
+        id: "",
+        imageUrl: "img03.jpg",
+        isCover: true,
+        listingId: "",
+        order: 0
+      },
+      {
+        createdAt: "",
+        id: "",
+        imageUrl: "img04.jpg",
+        isCover: true,
+        listingId: "",
+        order: 0
+      },
+      {
+        createdAt: "",
+        id: "",
+        imageUrl: "img05.jpg",
+        isCover: true,
+        listingId: "",
+        order: 0
+      }
+
     ],
 
     averageRating: 4.89,
@@ -36,8 +72,8 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
     amenities: [
       { name: "Wifi", icon: "perm_scan_wififi" },
       { name: "Cuisine", icon: "kitchen" },
-      { name: "TV", icon: "tv"},
-      {name: "Parking", icon: "local_parking"},
+      { name: "TV", icon: "tv" },
+      { name: "Parking", icon: "local_parking" },
       { name: "Climatisation", icon: "toys", },
       { name: "Non fumeur", icon: "smoke_free", }
     ],
@@ -47,7 +83,7 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
       hostName: "Marie",
       hostEmail: "",
       photo: "https://via.placeholder.com/112",
-      joinedYear: 2019,
+      joinedYear: "2019",
       isVerified: true,
       totalReviews: 378,
       bio: "any ccccc"

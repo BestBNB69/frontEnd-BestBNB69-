@@ -3,7 +3,7 @@ export interface Host {
   hostName: string;
   hostEmail: string;
   photo?: string;
-  joinedYear: number;
+  joinedYear: string;
   totalReviews: number;
   isVerified: boolean;
   bio: string;

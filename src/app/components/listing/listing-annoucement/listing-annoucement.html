@@ -21,7 +21,11 @@
                 <span class="font-semibold text-[15px]">{{ listingAnnoucements.city }}, {{ listingAnnoucements.country }}</span>
                 <!-- <span class="flex items-center gap-1 text-sm font-medium">⭐ {{ listingAnnoucements.rating }}</span> -->
               </div>
-              <div class="text-sm text-medium-gray mb-1">{{ listingAnnoucements.description }}</div>
+              @if (listingAnnoucements.description && listingAnnoucements.description.length > 10) {
+                <div class="text-sm text-medium-gray mb-1">{{ listingAnnoucements.description.substring(0,10)}}{{three}}</div>
+              } @else {
+                <div class="text-sm text-medium-gray mb-1">{{ listingAnnoucements.description}}</div>
+              }
               <!-- <div class="text-sm text-medium-gray mb-2">{{ listingAnnoucements.Date }}</div> -->
               <div class="text-[15px]"><strong class="font-semibold">{{ listingAnnoucements.pricePerNight }}€</strong> par nuit</div>
             </div>

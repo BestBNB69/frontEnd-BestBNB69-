@@ -15,6 +15,7 @@ import { ListingAmenity } from '../listing-amenity/listing-amenity';
 import { ListingDatepicker } from '../listing-datepicker/listing-datepicker';
 import { ListingComment } from '../listing-comment/listing-comment';
 import { Maps } from '../../maps/maps';
+import { photoModel } from '../../../models/photos';
 
 @Component({
   selector: 'app-listing-details',
@@ -26,6 +27,7 @@ export class ListingDetails implements OnInit {
   listing: DetailsAnnoucement | undefined;
   id!: string;
   routeA!: string | null;
+  photos: photoModel[] | undefined;
   loading = true;
   error = false;
   showCalendar = false;
@@ -34,6 +36,7 @@ export class ListingDetails implements OnInit {
   currentMonth: Date = new Date();
   nextMonth: Date = new Date();
   numberOfNights = 0;
+  public short = true;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -57,12 +60,20 @@ export class ListingDetails implements OnInit {
   loadListing() {
     this.listingsService.getListing(this.id).subscribe(res => {
       this.listing = res.listing;
+      if (this.listing?.photos && this.listing?.photos.length > 0) {
+        this.listing.photos.forEach(photos => photos.imageUrl = "http://localhost:5235" + photos.imageUrl)
+      }
       this.loading = false;
+      if (this.listing?.description && this.listing?.description.length > 50) {
+        this.short = false;
+      }
+      if (this.listing?.hostInfo.joinedYear) {
+        this.listing.hostInfo.joinedYear = new Date(this.listing.hostInfo.joinedYear).getFullYear().toString()
+      }
       console.log(this.listing)
       this.cdr.detectChanges();
     });
   }
-
 
   getDaysInMonth(date: Date): DayCalendar[] {
     const year = date.getFullYear();
@@ -169,5 +180,9 @@ export class ListingDetails implements OnInit {
     this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
     this.nextMonth = new Date(this.currentMonth);
     this.nextMonth.setMonth(this.nextMonth.getMonth() + 1);
+  }
+
+  fullDescription() {
+    this.short = true;
   }
 }

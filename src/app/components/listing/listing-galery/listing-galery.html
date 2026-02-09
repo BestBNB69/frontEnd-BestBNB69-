@@ -1,13 +1,16 @@
 <div class="mb-12 relative">
   @if (images && images.length > 0) {
     <div class="grid grid-cols-4 grid-rows-2 gap-2 rounded-xl overflow-hidden h-[400px]">
-      <div class="col-span-2 row-span-2 relative group cursor-pointer">
-        <img [src]="images[0]" class="w-full h-full object-cover hover:brightness-95 transition"/>
-      </div>
-      @for (img of images.slice(1, 5); track $index) {
-        <div class="relative group cursor-pointer">
-          <img [src]="img" class="w-full h-full object-cover hover:brightness-95 transition"/>
-        </div>
+      @for (img of images; track $index) {
+        @if (img.isCover == true) {
+          <div class="col-span-2 row-span-2 relative group cursor-pointer">
+            <img [src]="img.imageUrl" class="w-full h-full object-cover hover:brightness-95 transition"/>
+          </div>
+        } @else {
+          <div class="relative group cursor-pointer">
+            <img [src]="img.imageUrl" class="w-full h-full object-cover hover:brightness-95 transition"/>
+          </div>
+        }
       }
     </div>
     <button class="absolute bottom-6 right-6 bg-white border border-gray-900 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition flex items-center gap-2 shadow-md">
