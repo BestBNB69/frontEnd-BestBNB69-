@@ -13,3 +13,9 @@ services:
     volumes:
       - .:/app
     restart: unless-stopped
+    networks:
+      - miniBNB_network
+
+networks:
+  miniBNB_network:
+    external: true
