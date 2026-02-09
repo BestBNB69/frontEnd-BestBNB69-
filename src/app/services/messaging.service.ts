@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
 import {supabase} from '../envirronement';
+import {BehaviorSubject, Observable} from 'rxjs';
 export interface Message {
   id: string;
-  conversation_id: string;
   sender_id: string;
+  sender_name: string;
   content: string;
-  created_at: string;
-  edited_at?: string;
-  is_deleted: boolean;
+  timestamp: Date;
 }
 
 export interface Conversation {
   id: string;
-  title?: string;
-  created_at: string;
-  updated_at: string;
-  last_message_at?: string;
+  participants: string[];
   last_message?: string;
-  participant_name?: string;
+  last_message_time?: Date;
+  messages: Message[];
 }
 
 export interface ConversationParticipant {
@@ -31,160 +28,86 @@ export interface ConversationParticipant {
   providedIn: 'root',
 })
 export class MessagingService {
-  async getUserConversations(userId: string): Promise<Conversation[]> {
-    const { data, error } = await supabase
-      .from('conversation_participants')
-      .select(`
-        conversation_id,
-        conversations!inner (
-          id,
-          title,
-          created_at,
-          updated_at,
-          last_message_at
-        )
-      `)
-      .eq('user_id', userId);
+  private conversationsSubject = new BehaviorSubject<Conversation[]>([]);
+  public conversations$ = this.conversationsSubject.asObservable();
 
-    if (error) {
-      console.error('Error fetching conversations:', error);
-      return [];
-    }
+  private currentConversation = new BehaviorSubject<Conversation | null>(null);
+  public currentConversation$ = this.currentConversation.asObservable();
 
-    const conversations: Conversation[] = data?.map((item: any) => ({
-      id: item.conversations.id,
-      title: item.conversations.title,
-      created_at: item.conversations.created_at,
-      updated_at: item.conversations.updated_at,
-      last_message_at: item.conversations.last_message_at,
-      last_message: undefined
-    })) || [];
+  private storageKey = 'bestbnb_conversations';
+  private currentUserId = 'current-user-' + Math.random().toString(36).substr(2, 9);
 
-    for (const conv of conversations) {
-      const lastMsg = await this.getLastMessage(conv.id);
-      if (lastMsg) {
-        conv.last_message = lastMsg.content;
-      }
-    }
-
-    return conversations;
+  constructor() {
+    this.loadConversations();
   }
 
-  async getConversationMessages(conversationId: string): Promise<Message[]> {
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .eq('conversation_id', conversationId)
-      .eq('is_deleted', false)
-      .order('created_at', { ascending: true });
-
-    if (error) {
-      console.error('Error fetching messages:', error);
-      return [];
-    }
-
-    return data || [];
-  }
-
-  async sendMessage(conversationId: string, senderId: string, content: string): Promise<Message | null> {
-    const { data, error } = await supabase
-      .from('messages')
-      .insert({
-        conversation_id: conversationId,
-        sender_id: senderId,
-        content: content
-      })
-      .select()
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error sending message:', error);
-      return null;
-    }
-
-    await supabase
-      .from('conversations')
-      .update({
-        last_message_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', conversationId);
-
-    return data;
-  }
-
-  async createConversation(title?: string): Promise<string | null> {
-    const { data, error } = await supabase
-      .from('conversations')
-      .insert({ title })
-      .select()
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error creating conversation:', error);
-      return null;
-    }
-
-    return data?.id || null;
-  }
-
-  async addParticipant(conversationId: string, userId: string): Promise<boolean> {
-    const { error } = await supabase
-      .from('conversation_participants')
-      .insert({
-        conversation_id: conversationId,
-        user_id: userId
+  private loadConversations() {
+    const stored = localStorage.getItem(this.storageKey);
+    const conversations = stored ? JSON.parse(stored) : [];
+    conversations.forEach((conv: Conversation) => {
+      conv.messages.forEach((msg: Message) => {
+        msg.timestamp = new Date(msg.timestamp);
       });
+      if (conv.last_message_time) {
+        conv.last_message_time = new Date(conv.last_message_time);
+      }
+    });
+    this.conversationsSubject.next(conversations);
+  }
 
-    if (error) {
-      console.error('Error adding participant:', error);
-      return false;
+  private saveConversations() {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.conversationsSubject.value));
+  }
+
+  getConversations(): Observable<Conversation[]> {
+    return this.conversations$;
+  }
+
+  createConversation(participantName: string): Conversation {
+    const newConversation: Conversation = {
+      id: 'conv-' + Date.now(),
+      participants: [this.currentUserId, participantName],
+      messages: []
+    };
+
+    const conversations = this.conversationsSubject.value;
+    conversations.push(newConversation);
+    this.conversationsSubject.next(conversations);
+    this.saveConversations();
+
+    return newConversation;
+  }
+
+  selectConversation(conversationId: string) {
+    const conversations = this.conversationsSubject.value;
+    const conversation = conversations.find(c => c.id === conversationId);
+    this.currentConversation.next(conversation || null);
+  }
+
+  sendMessage(conversationId: string, content: string, senderName: string = 'Vous') {
+    const conversations = this.conversationsSubject.value;
+    const conversation = conversations.find(c => c.id === conversationId);
+
+    if (conversation) {
+      const message: Message = {
+        id: 'msg-' + Date.now(),
+        sender_id: this.currentUserId,
+        sender_name: senderName,
+        content: content,
+        timestamp: new Date()
+      };
+
+      conversation.messages.push(message);
+      conversation.last_message = content;
+      conversation.last_message_time = new Date();
+
+      this.conversationsSubject.next(conversations);
+      this.currentConversation.next(conversation);
+      this.saveConversations();
     }
-
-    return true;
   }
 
-  async getLastMessage(conversationId: string): Promise<Message | null> {
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .eq('conversation_id', conversationId)
-      .eq('is_deleted', false)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error fetching last message:', error);
-      return null;
-    }
-
-    return data;
-  }
-
-  async markAsRead(conversationId: string, userId: string): Promise<void> {
-    await supabase
-      .from('conversation_participants')
-      .update({ last_read_at: new Date().toISOString() })
-      .eq('conversation_id', conversationId)
-      .eq('user_id', userId);
-  }
-
-  subscribeToMessages(conversationId: string, callback: (message: Message) => void) {
-    return supabase
-      .channel(`messages:${conversationId}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'messages',
-          filter: `conversation_id=eq.${conversationId}`
-        },
-        (payload) => {
-          callback(payload.new as Message);
-        }
-      )
-      .subscribe();
+  getCurrentUserId(): string {
+    return this.currentUserId;
   }
 }

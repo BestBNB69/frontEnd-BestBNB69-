@@ -5,6 +5,7 @@ import { Signin } from './pages/signin/signin';
 import { Listing } from './pages/listing/listing';
 import { LandingPage } from './pages/landing-page/landing-page';
 import { HostHome } from './pages/host-home/host-home';
+import {Messaging} from './pages/messaging/messaging';
 
 export const routes: Routes = [
 
@@ -33,8 +34,8 @@ export const routes: Routes = [
     },
     {
         path: 'messages',
-        canActivate: [Authguard],
-        component: Signin // 🔧 TEMPORAIRE
+        //canActivate: [Authguard],
+        component: Messaging
     },
 
     {
