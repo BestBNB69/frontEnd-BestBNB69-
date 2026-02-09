@@ -1,4 +1,4 @@
-import {Host} from './host';
+import { Host } from './host';
 
 export interface DetailsAnnoucement {
   id: number;
@@ -12,12 +12,12 @@ export interface DetailsAnnoucement {
   beds: number;
   bathrooms: number;
   description: string;
-  images: string[];
+  photos: string[];
   averageRating: number;
   totalReviews: number;
-  availability : Availability[]
+  availability: Availability[]
   amenities: Amenity[];
-  host: Host;
+  hostInfo: Host;
   rules: ListingRules;
   ratings: number;
 }

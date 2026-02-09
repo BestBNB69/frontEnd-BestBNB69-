@@ -22,13 +22,13 @@ export const routes: Routes = [
 
     {
         path: 'listings',
-       // canActivate: [Authguard],
+        canActivate: [Authguard],
         component: LandingPage
     },
     {
         path: 'listings/:id',
         component: Listing,
-        //canActivate: [Authguard],
+        canActivate: [Authguard],
         title: "Details",
     },
     {
@@ -40,11 +40,11 @@ export const routes: Routes = [
     {
         path: 'host',
         canActivate: [Authguard],
-        data: { roles: ['HOST', 'CO_HOST'] },
+        // data: { roles: ['HOST', 'CO_HOST'] },
         children: [
-            { path: 'dashboard', component: HostHome, title: "Dashboard" },
-            { path: 'listings', component: HostHome, title: "Listings" },
-            { path: 'users', component: HostHome, title: "Users" }
+            { path: 'dashboard', component: HostHome, title: "Host-Dashboard" },
+            { path: 'listings', component: HostHome, title: "Host-Listings" },
+            { path: 'users', component: HostHome, title: "Host-Users" }
         ]
     }
 ];

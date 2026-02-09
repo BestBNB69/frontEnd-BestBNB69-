@@ -1,5 +1,5 @@
 <div class="mb-12 relative">
-  @if (images.length > 0) {
+  @if (images && images.length > 0) {
     <div class="grid grid-cols-4 grid-rows-2 gap-2 rounded-xl overflow-hidden h-[400px]">
       <div class="col-span-2 row-span-2 relative group cursor-pointer">
         <img [src]="images[0]" class="w-full h-full object-cover hover:brightness-95 transition"/>

@@ -1,6 +1,7 @@
 export interface Host {
-  id: number;
-  name: string;
+  hostId: string;
+  hostName: string;
+  hostEmail: string;
   photo?: string;
   joinedYear: number;
   totalReviews: number;

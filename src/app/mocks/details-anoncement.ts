@@ -16,7 +16,7 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
 
     description: "Appartement moderne avec 2 chambres, proche du centre-ville.",
 
-    images: [
+    photos: [
       "img01.png",
       "img02.jpg",
       "img03.jpg",
@@ -42,9 +42,10 @@ export const DETAILS_ANNONCEMENT: DetailsAnnoucement[] = [
       { name: "Non fumeur", icon: "smoke_free", }
     ],
 
-    host: {
-      id: 1,
-      name: "Marie",
+    hostInfo: {
+      hostId: "kldksllds",
+      hostName: "Marie",
+      hostEmail: "",
       photo: "https://via.placeholder.com/112",
       joinedYear: 2019,
       isVerified: true,

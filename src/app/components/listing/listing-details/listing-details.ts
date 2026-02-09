@@ -24,7 +24,8 @@ import {Maps} from '../../maps/maps';
 })
 export class ListingDetails implements OnInit {
   listing: DetailsAnnoucement | undefined;
-  id!: number;
+  id!: string;
+  routeA!: string | null;
   loading = true;
   error = false;
   showCalendar = false;
@@ -36,11 +37,17 @@ export class ListingDetails implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly listingsService: ListingsService
-  ) {}
+    private readonly listingsService: ListingsService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.routeA = this.route.snapshot.paramMap.get('id')
+    if (this.routeA != null) {
+      this.id = this.routeA;
+    } else {
+      this.id = "";
+    }
     this.loadListing();
     this.currentMonth = new Date();
     this.nextMonth = new Date(this.currentMonth);
@@ -49,8 +56,10 @@ export class ListingDetails implements OnInit {
 
   loadListing() {
     this.listingsService.getListing(this.id).subscribe(res => {
-      this.listing = res;
+      this.listing = res.listing;
       this.loading = false;
+      console.log(this.listing)
+      this.cdr.detectChanges();
     });
   }
 

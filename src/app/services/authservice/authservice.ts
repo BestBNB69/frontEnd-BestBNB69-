@@ -24,7 +24,7 @@ export class Authservice {
       EmailAddress: data.email,
       PasswordHash: data.password
     };
-    return this.http.post<AuthResponse>(`${this.API_URL}/Users/Login`, newRes)
+    return this.http.post<AuthResponse>(`${this.API_URL}/users/login`, newRes)
       .pipe(
         tap(res => {
           this.storeAuth(res);
@@ -39,11 +39,11 @@ export class Authservice {
       EmailAddress: data.email,
       PasswordHash: data.password
     };
-    return this.http.post<AuthResponse>(`${this.API_URL}/Users/Register`, newRes)
+    return this.http.post<AuthResponse>(`${this.API_URL}/users/register`, newRes)
       .pipe(
         tap(res => {
           this.storeAuth(res);
-          // this.redirectAfterLogin();
+          this.redirectAfterLogin();
         })
       );
   }
@@ -131,10 +131,6 @@ export class Authservice {
   }
 
   private redirectAfterLogin(): void {
-    // if (roles.includes('HOST')) {
-    // this.router.navigate(['/host/dashboard']);
-    // } else {
     this.router.navigate(['/listings']);
-    // }
   }
 }

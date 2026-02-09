@@ -8,12 +8,12 @@
 
       <app-listing-header [city]="listing.city" [country]="listing.country" [title]="listing.title" [rating]="listing.ratings" [totalReviews]="listing.totalReviews"></app-listing-header>
 
-      <app-listing-galery [images]="listing.images"></app-listing-galery>
+      <app-listing-galery [images]="listing.photos"></app-listing-galery>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-24">
         <div class="lg:col-span-2">
 
-          <app-listing-host-info [type]="listing.type" [hostName]="listing.host.name" [capacity]="listing.capacity" [bedrooms]="listing.bedrooms" [bathrooms]="listing.bathrooms" [beds]="listing.beds"></app-listing-host-info>
+          <app-listing-host-info [type]="listing.type" [hostName]="listing.hostInfo.hostName" [capacity]="listing.capacity" [bedrooms]="listing.bedrooms" [bathrooms]="listing.bathrooms" [beds]="listing.beds"></app-listing-host-info>
 
           <!-- Points forts du logement -->
           <app-listing-features></app-listing-features>

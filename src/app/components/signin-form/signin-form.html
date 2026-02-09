@@ -4,7 +4,12 @@
       <h1 data-cy="loginTitle" class="text-2xl font-bold text-center mb-6">Authentification</h1>
       @if (authenticationError()) {
         <div class="alert alert-dangerbg-red-100 text-red-700 p-3 rounded mb-4 text-center" data-cy="loginError">
-          <strong>Erreur d&apos;authentification !</strong> Veuillez vérifier vos identifiants de connexion.
+          <strong>Erreur d&apos;authentification !</strong>
+          @if (errorResponse.status > 400 && errorResponse.status < 500) {
+            Veuillez vérifier vos identifiants de connexion. <p class="text-red-800">{{errorResponse.error.message}} {{errorResponse.error.error}}</p>
+          } @else if (errorResponse.status >= 500) {
+            Une erreur a eu lieu coté serveur. <p class="text-red-800">{{errorResponse.error.message}} {{errorResponse.error.error}}</p>
+          }
         </div>
       }
       <form class="form" (ngSubmit)="login()" [formGroup]="loginForm">
