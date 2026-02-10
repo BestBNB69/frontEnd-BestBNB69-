@@ -171,6 +171,27 @@
         </div>
 
         <input
+        <!-- Images -->
+        <div class="space-y-2">
+          <p class="text-sm font-medium text-gray-700">Images</p>
+
+          <!-- Preview des images -->
+          <div class="flex flex-wrap gap-2 mb-2">
+            <ng-container *ngFor="let img of imagePreviews; let i = index">
+              <div class="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+                <img [src]="img" class="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  (click)="removeImage(i)"
+                  class="absolute top-1 right-1 bg-black/50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  ✕
+                </button>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- Input fichier -->
+          <input
             type="file"
             multiple
             (change)="onImagesSelected($event)"

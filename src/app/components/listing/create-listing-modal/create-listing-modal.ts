@@ -132,21 +132,38 @@ export class CreateListingModal {
 
     this.loading = true;
 
-    const payload = {
-      ...this.form.value,
-      pricePerNight: this.form.value.price,
-      images: [],
-    };
+    try {
+      const images = this.imagePreviews.map((imgBase64, index) => ({
+        IsCover: index === 0,
+        Order: index,
+        // Supprime le préfixe data:image/png;base64, si ton backend ne l'accepte pas
+        ImageData: imgBase64.replace(/^data:image\/\w+;base64,/, '')
+      }));
 
-    this.listingsService.createListing(payload).subscribe({
-      next: () => {
-        this.loading = false;
-        this.close.emit();
-      },
-      error: err => {
-        console.error('CREATE LISTING ERROR', err);
-        this.loading = false;
-      },
-    });
+      const payload = {
+        ...this.form.value,
+        pricePerNight: this.form.value.price,
+        images
+      };
+
+      this.listingsService.createListing(payload).subscribe({
+        next: () => {
+          this.loading = false;
+          this.close.emit();
+        },
+        error: err => {
+          console.error('CREATE LISTING ERROR', err);
+          this.loading = false;
+        },
+      });
+
+    } catch (err) {
+      console.error('Error preparing images', err);
+      this.loading = false;
+    }
   }
+
+
+
+
 }

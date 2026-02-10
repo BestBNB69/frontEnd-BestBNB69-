@@ -48,10 +48,8 @@
       <!-- User -->
       <div class="flex items-center gap-3 mb-3">
         <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-sm font-semibold">
-          {{ comment.userId.slice(0, 2).toUpperCase() }}
         </div>
         <div>
-          <h4 class="font-semibold text-sm">User {{ comment.userId.slice(0, 6) }}</h4>
           <p class="text-xs text-gray-600">{{ comment.createdAt | date: 'MMMM yyyy' }}</p>
         </div>
       </div>
