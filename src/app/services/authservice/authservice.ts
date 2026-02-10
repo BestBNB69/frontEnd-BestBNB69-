@@ -9,7 +9,7 @@ import { LoginDto, LoginBackDto, RegisterDto, RegisterBackDto } from '../../mode
   providedIn: 'root',
 })
 export class Authservice {
-  private readonly API_URL = 'http://localhost:4200/api';
+  private readonly API_URL = 'http://localhost:5235/api';
 
   private isLoggedIn$ = new BehaviorSubject<boolean>(this.hasToken());
   private roles$ = new BehaviorSubject<string[]>(this.getStoredRoles());
@@ -90,6 +90,7 @@ export class Authservice {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('roles');
     localStorage.removeItem('userId');
+    localStorage.removeItem('bestbnb_conversations');
   }
 
   isAuthenticated(): boolean {

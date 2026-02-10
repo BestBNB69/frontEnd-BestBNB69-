@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listing-header',
@@ -12,15 +13,21 @@ export class ListingHeader {
   @Input() title: string = "";
   @Input() rating: number = 0;
   @Input() totalReviews: number = 0;
+  @Input() listingId: string = "";
 
-  @Output() share  = new EventEmitter<void>();
+  @Output() share = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
+  constructor(private router: Router) { }
 
-  onShare(): void{
+  onShare(): void {
     this.share.emit();
   }
 
-  onSave(): void{
+  onSave(): void {
     this.save.emit();
+  }
+
+  goMessages(): void {
+    this.router.navigate([`/messages/${this.listingId}`])
   }
 }

@@ -19,7 +19,7 @@ export class Authguard {
       payload = JSON.parse(atob(acc.split('.')[1]));
       expDate = new Date(payload.exp * 1000);
     }
-    console.log(expDate)
+    console.log(acc)
     if (expDate < new Date()) {
       this.auth.logout()
     }

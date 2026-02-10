@@ -83,14 +83,4 @@ export class ListingsService {
       headers: this.headers
     });
   }
-
-  // getAllListings(): Observable<DetailsAnnoucement[]> {
-  //   return  of(DETAILS_ANNONCEMENT);
-  // }
-
-  // getListing(id: number): Observable<DetailsAnnoucement | undefined> {
-  //   return this.getAllListings().pipe(
-  //     map(listings => listings.find(listing => listing.id === id))
-  //   );
-  // }
 }
