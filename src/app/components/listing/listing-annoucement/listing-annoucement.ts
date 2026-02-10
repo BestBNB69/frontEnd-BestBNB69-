@@ -5,7 +5,7 @@ import { ListingsModel } from '../../../models/listings-model';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { photoModel } from '../../../models/photos';
-import {DetailsAnnoucement} from '../../../models/details-annoucement';
+import { DetailsAnnoucement } from '../../../models/details-annoucement';
 
 @Component({
   selector: 'app-listing-annoucement',
@@ -38,12 +38,10 @@ export class ListingAnnoucement {
       this.listingAnnoucement.forEach(element => {
         if (element.photos && element.photos.length > 0) {
           element.photos[0].imageUrl = this.Url + element.photos[0].imageUrl
-          // console.log(element.photos[0].imageUrl)
         }
       });
       this.loading = false;
       this.cdr.detectChanges();
-      // console.log(res)
     });
   }
 

@@ -31,14 +31,20 @@
           <td>{{ listing.address }}</td>
           <td>{{ listing.postalCode }}</td>
           <td>{{ listing.pricePerNight }} €</td>
-          <td>{{ listing.hostInfo.hostName }}</td>
+          @if (listing.hostInfo) {
+            <td>{{ listing.hostInfo.hostName }}</td>
+          } @else {
+            <td>Aucun</td>
+          }
           <td>{{ listing.surface }} m²</td>
           <td>{{ listing.location }}</td>
           <td>{{ listing.amenities }}</td>
           <td>{{ listing.updatedAt }}</td>
           <td>
             <button (click)="openEdit(listing)">Edit</button>
-            <button class="danger" (click)="delete(listing.id)">Delete</button>
+            @if (listing.id) {
+              <button class="danger" (click)="delete(listing.id)">Delete</button>
+            }
           </td>
         </tr>
       }
