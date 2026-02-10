@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {map, Observable, of} from 'rxjs';
-import {DetailsAnnoucement} from '../../models/details-annoucement';
+import {CreateListingPayload, DetailsAnnoucement} from '../../models/details-annoucement';
 import {DETAILS_ANNONCEMENT} from '../../mocks/details-anoncement';
 
 @Injectable({
@@ -9,6 +9,7 @@ import {DETAILS_ANNONCEMENT} from '../../mocks/details-anoncement';
 })
 export class ListingsService {
   private apiUrl = 'http://localhost:8080/api/listings';
+
   constructor(private http: HttpClient) { }
 
   /*getAllListings(): Observable<any[]> {
@@ -21,6 +22,10 @@ export class ListingsService {
       map(listings => listings.find(listing => listing.id === id))
     );
   }*/
+
+  createListing(payload: CreateListingPayload): Observable<void> {
+    return this.http.post<void>(this.apiUrl, payload);
+  }
 
   getAllListings(): Observable<DetailsAnnoucement[]> {
     return  of(DETAILS_ANNONCEMENT);

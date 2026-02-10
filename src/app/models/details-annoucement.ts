@@ -40,3 +40,25 @@ export interface ListingRules {
   houseRules: string[];
   safetyRules: string[];
 }
+
+
+export interface CreateListingPayload {
+  title: string;
+  description?: string;
+  city: string;
+  address: string;
+  postalCode?: string | null;
+  country: string;
+  pricePerNight: number;
+  price: number;
+  maxGuests: number;
+  surface: number;
+  available: boolean;
+  location: number[];
+  amenities: number[];
+  images: {
+    isCover: boolean;
+    order: number;
+    imageData: number[];
+  }[];
+}
