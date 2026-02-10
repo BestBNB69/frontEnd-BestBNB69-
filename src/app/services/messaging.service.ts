@@ -84,8 +84,9 @@ export class MessagingService {
   getCurrentUserId(): string {
     return this.currentUserId;
   }
+
   getOrCreateConversationForListing(
-    listingId: number,
+    listingId: string,
     hostName: string
   ) {
     const conversations = this.conversationsSubject.value;
@@ -145,7 +146,7 @@ export class MessagingService {
   createConversation(participantName: string): Conversation {
     const newConversation: Conversation = {
       id: 'conv-' + Date.now(),
-      listingId: 0,
+      listingId: "0",
       participants: [this.currentUserId, participantName],
       messages: [],
     };

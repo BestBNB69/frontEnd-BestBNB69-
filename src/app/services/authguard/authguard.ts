@@ -12,8 +12,6 @@ export class Authguard {
   ) { }
 
   canActivate(): boolean {
-    // const token = this.auth.isAuthenticated();
-    // console.log('AuthGuard check, token =', token);
     let payload;
     let expDate = new Date();
     const acc = localStorage.getItem('accessToken');

@@ -8,5 +8,5 @@ import { ListingDetails } from '../../components/listing/listing-details/listing
   styleUrl: './listing.css',
 })
 export class Listing {
-
+  
 }

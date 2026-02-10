@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { photoModel } from '../../../models/photos';
 
 @Component({
   selector: 'app-listing-galery',
@@ -7,5 +8,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './listing-galery.css',
 })
 export class ListingGalery {
-  @Input() images: string[] = [];
+  @Input() images: photoModel[] = [];
 }

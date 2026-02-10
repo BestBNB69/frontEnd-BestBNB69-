@@ -1,33 +1,51 @@
-import {DetailsAnnoucement} from '../../../models/details-annoucement';
-import {ListingsService} from '../../../services/listings/listings-service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {Header} from '../../header/header';
-import {Footer} from '../../footer/footer';
-import {DayCalendar} from '../../../models/calendar';
-import {ListingHeader} from '../listing-header/listing-header';
-import {ListingGalery} from '../listing-galery/listing-galery';
-import {ListingHostInfo} from '../listing-host-info/listing-host-info';
-import {ListingFeatures} from '../listing-features/listing-features';
-import {BookingCard} from '../../booking-card/booking-card';
-import {ListingAmenity} from '../listing-amenity/listing-amenity';
-import {ListingDatepicker} from '../listing-datepicker/listing-datepicker';
-import {ListingComment} from '../listing-comment/listing-comment';
-import {Maps} from '../../maps/maps';
-import {MessagingService} from '../../../services/messaging.service';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { ListingsService } from '../../../services/listings/listings-service';
+import { MessagingService } from '../../../services/messaging.service';
+import { DetailsAnnoucement } from '../../../models/details-annoucement';
+import { DayCalendar } from '../../../models/calendar';
+import { photoModel } from '../../../models/photos';
+
+import { Header } from '../../header/header';
+import { Footer } from '../../footer/footer';
+import { ListingHeader } from '../listing-header/listing-header';
+import { ListingGalery } from '../listing-galery/listing-galery';
+import { ListingHostInfo } from '../listing-host-info/listing-host-info';
+import { ListingFeatures } from '../listing-features/listing-features';
+import { BookingCard } from '../../booking-card/booking-card';
+import { ListingAmenity } from '../listing-amenity/listing-amenity';
+import { ListingDatepicker } from '../listing-datepicker/listing-datepicker';
+import { ListingComment } from '../listing-comment/listing-comment';
+import { Maps } from '../../maps/maps';
 
 @Component({
   selector: 'app-listing-details',
-  imports: [CommonModule, Header, Footer, ListingHeader, ListingGalery, ListingHostInfo, ListingFeatures, BookingCard, ListingAmenity, ListingDatepicker, ListingComment, Maps],
+  imports: [
+    CommonModule,
+    Header,
+    Footer,
+    ListingHeader,
+    ListingGalery,
+    ListingHostInfo,
+    ListingFeatures,
+    BookingCard,
+    ListingAmenity,
+    ListingDatepicker,
+    ListingComment,
+    Maps
+  ],
   templateUrl: './listing-details.html',
-  styleUrl: './listing-details.css',
+  styleUrls: ['./listing-details.css'],
 })
 export class ListingDetails implements OnInit {
   listing: DetailsAnnoucement | undefined;
-  id!: number;
+  id!: string;
+  photos: photoModel[] | undefined;
   loading = true;
   error = false;
+
   showCalendar = false;
   checkInDate: Date | null = null;
   checkOutDate: Date | null = null;
@@ -35,42 +53,78 @@ export class ListingDetails implements OnInit {
   nextMonth: Date = new Date();
   numberOfNights = 0;
 
+  isShortDescription = true;
+  averageRating = 0;
+  totalReviews = 0;
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly listingsService: ListingsService,
     private readonly messagingService: MessagingService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
     this.loadListing();
+
     this.currentMonth = new Date();
     this.nextMonth = new Date(this.currentMonth);
     this.nextMonth.setMonth(this.nextMonth.getMonth() + 1);
   }
 
   loadListing() {
-    this.listingsService.getListing(this.id).subscribe(res => {
-      this.listing = res;
-      this.loading = false;
-    });
+    this.listingsService.getListing(this.id).subscribe(
+      res => {
+        this.listing = res;
+
+        // Préparer les photos
+        if (this.listing?.photos?.length) {
+          this.listing.photos.forEach(photo => {
+            photo.imageUrl = "http://localhost:5235" + photo.imageUrl;
+          });
+        }
+
+        this.loading = false;
+
+        // Vérifier la description courte
+        this.isShortDescription = !(this.listing?.description && this.listing.description.length > 50);
+
+        // Formatage du joinedYear
+        if (this.listing?.hostInfo?.joinedYear) {
+          const year = new Date(this.listing.hostInfo.joinedYear).getFullYear();
+          this.listing.hostInfo.joinedYear = year.toString();
+        }
+
+        // Notes et reviews
+        this.averageRating = this.listing?.averageRating ?? 0;
+        this.totalReviews = this.listing?.totalReviews ?? 0;
+
+        this.cdr.detectChanges();
+      },
+      error => {
+        console.error('Erreur lors du chargement du listing', error);
+        this.error = true;
+        this.loading = false;
+      }
+    );
   }
-  contactHost() {
+
+  async contactHost() {
     if (!this.listing) return;
 
-    const conversation =
-      this.messagingService.getOrCreateConversationForListing(
+    try {
+      const conversation = await this.messagingService.getOrCreateConversationForListing(
         this.listing.id,
-        this.listing.host.name
+        this.listing.hostInfo.hostName
       );
-
-    this.messagingService.selectConversation(conversation.id);
-
-    this.router.navigate(['/messages']);
+      this.messagingService.selectConversation(conversation.id);
+      this.router.navigate(['/messages']);
+    } catch (err) {
+      console.error('Erreur lors de la création de la conversation', err);
+    }
   }
-
-
 
   getDaysInMonth(date: Date): DayCalendar[] {
     const year = date.getFullYear();
@@ -95,25 +149,21 @@ export class ListingDetails implements OnInit {
       });
     }
 
-    // Ajouter tous les jours du mois
+    // Ajouter les jours du mois
     for (let day = 1; day <= daysInMonth; day++) {
       const currentDate = new Date(year, month, day);
       const dateString = currentDate.toISOString().split('T')[0];
 
-      // Vérifier si la date est disponible dans listing.availability
-      const isAvailable = this.listing?.availability?.find(
-        (a: any) => a.date === dateString
-      )?.available ?? true;
-
+      const isAvailable = this.listing?.availability?.find(a => a.date === dateString)?.available ?? true;
       const isSelected = this.isDateSelected(currentDate);
       const inRange = this.isDateInRange(currentDate);
 
       days.push({
         date: currentDate,
-        day: day,
+        day,
         available: isAvailable,
         selected: isSelected,
-        inRange: inRange,
+        inRange,
         empty: false
       });
     }
@@ -123,10 +173,8 @@ export class ListingDetails implements OnInit {
 
   isDateSelected(date: Date): boolean {
     if (!this.checkInDate && !this.checkOutDate) return false;
-
     const dateStr = date.toDateString();
-    return dateStr === this.checkInDate?.toDateString() ||
-      dateStr === this.checkOutDate?.toDateString();
+    return dateStr === this.checkInDate?.toDateString() || dateStr === this.checkOutDate?.toDateString();
   }
 
   isDateInRange(date: Date): boolean {
@@ -138,15 +186,12 @@ export class ListingDetails implements OnInit {
     if (!day.available || day.empty) return;
 
     if (!this.checkInDate || (this.checkInDate && this.checkOutDate)) {
-      // Premier clic ou reset
       this.checkInDate = day.date;
       this.checkOutDate = null;
     } else if (day.date > this.checkInDate) {
-      // Deuxième clic - date de départ
       this.checkOutDate = day.date;
       this.calculateNights();
     } else {
-      // Date antérieure - reset
       this.checkInDate = day.date;
       this.checkOutDate = null;
     }
@@ -177,5 +222,9 @@ export class ListingDetails implements OnInit {
     this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
     this.nextMonth = new Date(this.currentMonth);
     this.nextMonth.setMonth(this.nextMonth.getMonth() + 1);
+  }
+
+  toggleFullDescription() {
+    this.isShortDescription = false;
   }
 }

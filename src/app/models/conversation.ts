@@ -3,7 +3,7 @@ import {Reservation, Message} from './message';
 
 export interface Conversation {
   id: string;
-  listingId: number;
+  listingId: string;
   participants: string[];
   reservation?: Reservation;
   last_message?: string;

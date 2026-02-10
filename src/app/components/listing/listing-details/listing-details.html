@@ -6,27 +6,31 @@
   @if (listing) {
     <div class="max-w-[1120px] mx-auto px-6 lg:px-20 py-6">
 
-      <app-listing-header [city]="listing.city" [country]="listing.country" [title]="listing.title" [rating]="listing.ratings" [totalReviews]="listing.totalReviews"></app-listing-header>
+      <app-listing-header [city]="listing.city" [country]="listing.country" [title]="listing.title" [rating]="averageRating" [totalReviews]="listing.totalReviews"></app-listing-header>
 
-      <app-listing-galery [images]="listing.images"></app-listing-galery>
+      <app-listing-galery [images]="listing.photos"></app-listing-galery>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-24">
         <div class="lg:col-span-2">
 
-          <app-listing-host-info [type]="listing.type" [hostName]="listing.host.name" [capacity]="listing.capacity" [bedrooms]="listing.bedrooms" [bathrooms]="listing.bathrooms" [beds]="listing.beds"></app-listing-host-info>
+          <app-listing-host-info [type]="listing.type" [hostName]="listing.hostInfo.hostName" [capacity]="listing.capacity" [bedrooms]="listing.bedrooms" [bathrooms]="listing.bathrooms" [beds]="listing.beds"></app-listing-host-info>
 
           <!-- Points forts du logement -->
           <app-listing-features></app-listing-features>
 
           <!-- Description -->
           <div class="py-8 border-b border-gray-200">
-            <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ listing.description }}</p>
-            <button class="mt-4 font-semibold underline flex items-center gap-1 hover:bg-gray-100 px-3 py-2 -ml-3 rounded-lg transition">
-              <span>Afficher plus</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-            </button>
+            @if (!isShortDescription) {
+              <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ listing.description.substring(0,50) }}...</p>
+              <button class="mt-4 font-semibold underline flex items-center gap-1 hover:bg-gray-100 px-3 py-2 -ml-3 rounded-lg transition" (click)="toggleFullDescription()">
+                <span>Afficher plus</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </button>
+            } @else {
+              <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ listing.description }}</p>
+            }
           </div>
 
           <!-- Équipements -->
@@ -43,7 +47,7 @@
         </div>
 
         <div class="lg:col-span-1">
-          <app-booking-card [price]="listing.price" [rating]="listing.ratings" [totalReviews]="listing.totalReviews"></app-booking-card>
+          <app-booking-card [price]="listing.pricePerNight" [rating]="listing.ratings" [totalReviews]="listing.totalReviews"></app-booking-card>
         </div>
 
       </div>
@@ -67,8 +71,8 @@
           <div class="flex-shrink-0">
             <img src="https://via.placeholder.com/112" alt="Hôte" class="w-28 h-28 rounded-full"/>
             <div class="mt-4 text-center">
-              <h4 class="font-semibold text-lg">Hébergé par Marie</h4>
-              <p class="text-sm text-gray-600">Hôte depuis 2019</p>
+              <h4 class="font-semibold text-lg">Hébergé par {{listing.hostInfo.hostName}}</h4>
+              <p class="text-sm text-gray-600">Hôte depuis {{listing.hostInfo.joinedYear}}</p>
             </div>
           </div>
           <div class="flex-1">

@@ -1,23 +1,24 @@
-import {Host} from './host';
+import { Host } from './host';
+import { photoModel } from './photos';
 
 export interface DetailsAnnoucement {
-  id: number;
+  id: string;
   title: string;
   type: string;
   city: string;
   country: string;
-  price: number;
+  pricePerNight: number;
   capacity: number;
   bedrooms: number;
   beds: number;
   bathrooms: number;
   description: string;
-  images: string[];
+  photos: photoModel[];
   averageRating: number;
   totalReviews: number;
-  availability : Availability[]
+  availability: Availability[]
   amenities: Amenity[];
-  host: Host;
+  hostInfo: Host;
   rules: ListingRules;
   ratings: number;
 }
