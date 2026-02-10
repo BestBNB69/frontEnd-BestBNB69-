@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import {ListingsService} from '../../../services/listings/listings-service';
+import { ListingsService } from '../../../services/listings/listings-service';
 
 @Component({
   selector: 'app-create-listing-modal',
@@ -17,7 +16,8 @@ export class CreateListingModal {
   loading = false;
   form: FormGroup;
 
-  readonly API_URL = 'http://localhost:8080/api/listings';
+  imageFiles: File[] = [];
+  imagePreviews: string[] = [];
 
   locations = [
     { label: 'Plage', value: 0 },
@@ -100,26 +100,67 @@ export class CreateListingModal {
     });
   }
 
+  onImagesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+
+    const files = Array.from(input.files);
+
+    files.forEach(file => {
+      this.imageFiles.push(file);
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.imagePreviews.push(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    input.value = '';
+  }
+
+  removeImage(index: number): void {
+    this.imageFiles.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
+  }
+
   submit(): void {
     if (this.form.invalid) return;
 
     this.loading = true;
 
-    const payload = {
-      ...this.form.value,
-      pricePerNight: this.form.value.price,
-      images: [],
-    };
+    try {
+      const images = this.imagePreviews.map((imgBase64, index) => ({
+        IsCover: index === 0,
+        Order: index,
+        // Supprime le préfixe data:image/png;base64, si ton backend ne l'accepte pas
+        ImageData: imgBase64.replace(/^data:image\/\w+;base64,/, '')
+      }));
 
-    this.listingsService.createListing(payload).subscribe({
-      next: () => {
-        this.loading = false;
-        this.close.emit();
-      },
-      error: err => {
-        console.error('CREATE LISTING ERROR', err);
-        this.loading = false;
-      },
-    });
+      const payload = {
+        ...this.form.value,
+        pricePerNight: this.form.value.price,
+        images
+      };
+
+      this.listingsService.createListing(payload).subscribe({
+        next: () => {
+          this.loading = false;
+          this.close.emit();
+        },
+        error: err => {
+          console.error('CREATE LISTING ERROR', err);
+          this.loading = false;
+        },
+      });
+
+    } catch (err) {
+      console.error('Error preparing images', err);
+      this.loading = false;
+    }
   }
+
+
+
+
 }
