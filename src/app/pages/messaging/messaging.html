@@ -6,24 +6,26 @@
       </div>
 
       <div class="flex-1 overflow-y-auto">
-        @if (conversations.length === 0) {
+        @if (conversations$ |async; as mv) {
+          @if (mv.length === 0) {
           <div class="p-8 text-center text-gray-500">
             <p class="text-lg mb-2">Aucune conversation</p>
             <p class="text-sm">Commencez une nouvelle conversation</p>
           </div>
-        } @else {
-          @for (conv of conversations; track conv.id) {
+        }@else {
+          @for (conv of mv; track $index) {
             <div
               (click)="selectConversation(conv)"
-              [class.bg-blue-50]="selectedConversation?.id === conv.id"
+              [class.bg-blue-50]="selectedConversation?.conversationId === conv.conversationId"
               class="p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition">
               <div class="flex items-start gap-3">
                 <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm font-semibold flex-shrink-0">
-                  {{ getInitials(conv.participants[1] || 'U') }}
+                  <!-- {{ conv }} -->
+                  {{ getInitials(conv.title) }}
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="font-semibold text-gray-800 truncate text-sm">
-                    {{ conv.participants[1] }}
+                    {{ conv.title }}
                   </div>
                   @if (conv.last_message) {
                     <p class="text-xs text-gray-600 truncate">
@@ -40,34 +42,43 @@
             </div>
           }
         }
+        }
       </div>
     </div>
 
     <div class="hidden md:flex md:w-2/3 bg-white flex-col">
-      @if (selectedConversation) {
+      @if (selectedConversation$ | async; as selectedConv) {
         <div class="p-4 border-b border-gray-200 bg-gray-50">
           <h3 class="text-lg font-semibold text-gray-800">
-            {{ selectedConversation.participants[1] }}
+            {{ selectedConv.title }}
           </h3>
         </div>
 
         <div class="flex-1 overflow-y-auto p-4 space-y-3 bg-white">
-          @for (msg of selectedConversation.messages; track msg.id) {
-            <div [class.justify-end]="msg.sender_id === currentUserId" class="flex">
-              <div
-                [class.bg-blue-600]="msg.sender_id === currentUserId"
-                [class.text-white]="msg.sender_id === currentUserId"
-                [class.bg-gray-100]="msg.sender_id !== currentUserId"
-                class="max-w-xs rounded-2xl px-4 py-2">
-                <p class="text-sm break-words">{{ msg.content }}</p>
-                <p
-                  [class.text-blue-100]="msg.sender_id === currentUserId"
-                  [class.text-gray-600]="msg.sender_id !== currentUserId"
-                  class="text-xs mt-1 opacity-70">
-                  {{ formatMessageTime(msg.timestamp) }}
-                </p>
+          @if (messages$ | async; as messages) {
+            @for (msg of (messagesSorted$ | async) ?? []; track msg.id) {
+              <div [class.justify-end]="msg.owner === true" class="flex">
+                <div
+                  [class.bg-blue-600]="msg.owner === true"
+                  [class.text-white]="msg.owner === true"
+                  [class.bg-gray-100]="msg.owner !== true"
+                  class="max-w-xs rounded-2xl px-4 py-2">
+                  <p class="text-sm break-words">{{ msg.content }}</p>
+                  <p
+                    [class.text-blue-200]="msg.owner === true"
+                    [class.text-gray-600]="msg.owner !== true"
+                    class="text-xs mt-1 opacity-100">
+                    {{ msg.sender_name }}
+                  </p>
+                  <p
+                    [class.text-blue-100]="msg.owner === true"
+                    [class.text-gray-600]="msg.owner !== true"
+                    class="text-xs mt-1 opacity-40">
+                    {{ formatMessageTime(msg.timestamp) }}
+                  </p>
+                </div>
               </div>
-            </div>
+            }
           }
         </div>
 
@@ -101,3 +112,29 @@
   </div>
 </div>
 
+@if (showNewConversationDialog) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-96 shadow-xl">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Nouvelle conversation</h3>
+      <input
+        type="text"
+        [(ngModel)]="newParticipantName"
+        placeholder="Titre de la Conversation"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 outline-none focus:border-blue-500"
+        (keyup.enter)="createNewConversation()">
+      <div class="flex gap-3 justify-end">
+        <button
+          (click)="closeNewConversationDialog()"
+          class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition">
+          Annuler
+        </button>
+        <button
+          (click)="createNewConversation()"
+          [disabled]="!newParticipantName.trim()"
+          class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg font-semibold transition">
+          Créer
+        </button>
+      </div>
+    </div>
+  </div>
+}
