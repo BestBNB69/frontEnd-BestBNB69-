@@ -1,4 +1,9 @@
+import {photoModel} from './photos';
+import {Host} from './host';
+import {Amenity, Availability, ListingRules} from './details-annoucement';
+
 export interface ListingsDTO {
+  updatedAt?: string;
   title: string,
   description: string,
   city: string,
@@ -10,5 +15,18 @@ export interface ListingsDTO {
   surface: 0,
   available: boolean,
   location: number[],
-  amenities: number[]
+  id?: string;
+  type?: string;
+  capacity?: number;
+  bedrooms?: number;
+  beds?: number;
+  bathrooms?: number;
+  photos?: photoModel[];
+  averageRating?: number;
+  totalReviews?: number;
+  availability?: Availability[]
+  amenities: Amenity[];
+  hostInfo?: Host;
+  rules?: ListingRules;
+  ratings?: number;
 }

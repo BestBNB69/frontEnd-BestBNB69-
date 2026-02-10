@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Conversation, MessagingService} from '../../services/messaging.service';
+import {MessagingService} from '../../services/messaging.service';
 import {FormsModule} from '@angular/forms';
+import {Conversation} from '../../models/conversation';
 
 @Component({
   selector: 'app-messaging',
@@ -15,8 +16,6 @@ export class Messaging implements OnInit{
   selectedConversation: Conversation | null = null;
   messageInput = '';
   isSending = false;
-  showNewConversationDialog = false;
-  newParticipantName = '';
   currentUserId = '';
 
   constructor(private messagingService: MessagingService) {}
@@ -44,24 +43,6 @@ export class Messaging implements OnInit{
     this.messagingService.sendMessage(this.selectedConversation.id, this.messageInput.trim());
     this.messageInput = '';
     this.isSending = false;
-  }
-
-  openNewConversationDialog() {
-    this.showNewConversationDialog = true;
-    this.newParticipantName = '';
-  }
-
-  closeNewConversationDialog() {
-    this.showNewConversationDialog = false;
-    this.newParticipantName = '';
-  }
-
-  createNewConversation() {
-    if (!this.newParticipantName.trim()) return;
-
-    const conversation = this.messagingService.createConversation(this.newParticipantName.trim());
-    this.selectConversation(conversation);
-    this.closeNewConversationDialog();
   }
 
   getInitials(name: string): string {

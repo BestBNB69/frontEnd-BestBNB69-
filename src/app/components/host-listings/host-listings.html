@@ -31,10 +31,10 @@
           <td>{{ listing.address }}</td>
           <td>{{ listing.postalCode }}</td>
           <td>{{ listing.pricePerNight }} €</td>
-          <td>{{ listing.hostnames }}</td>
+          <td>{{ listing.hostInfo.hostName }}</td>
           <td>{{ listing.surface }} m²</td>
-          <td>{{ listing.locationT }}</td>
-          <td>{{ listing.equipmentT }}</td>
+          <td>{{ listing.location }}</td>
+          <td>{{ listing.amenities }}</td>
           <td>{{ listing.updatedAt }}</td>
           <td>
             <button (click)="openEdit(listing)">Edit</button>

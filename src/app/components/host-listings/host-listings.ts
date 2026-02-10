@@ -3,6 +3,7 @@ import { ListingDialog } from '../listing-dialog/listing-dialog';
 import { ListingsModel } from '../../models/listings-model';
 import { ListingsService } from '../../services/listings/listings-service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {ListingsDTO} from '../../models/listingsDTO';
 
 @Component({
   selector: 'app-host-listings',
@@ -12,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class HostListings {
   editPopup = signal(false)
-  listingAnnoucement: ListingsModel[] = [];
+  listingAnnoucement: ListingsDTO[] = [];
   loading = true
   error = false
   isEdit = false;
@@ -31,7 +32,9 @@ export class HostListings {
     this.listingsService.getDashListings().subscribe(res => {
       this.listingAnnoucement = res;
       this.listingAnnoucement.forEach(element => {
-        element.updatedAt = new Date(element.updatedAt).toLocaleString()
+        if (element.updatedAt) {
+          element.updatedAt = new Date(element.updatedAt).toLocaleString();
+        }
       });
       this.loading = false;
       this.cdr.detectChanges();

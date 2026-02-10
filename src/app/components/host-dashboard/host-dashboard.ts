@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ListingsModel } from '../../models/listings-model';
 import { ListingsService } from '../../services/listings/listings-service';
+import {DetailsAnnoucement} from '../../models/details-annoucement';
 
 @Component({
   selector: 'app-host-dashboard',
@@ -9,7 +10,7 @@ import { ListingsService } from '../../services/listings/listings-service';
   styleUrl: './host-dashboard.css',
 })
 export class HostDashboard {
-  listingAnnoucement: ListingsModel[] = [];
+  listingAnnoucement: DetailsAnnoucement[] = [];
   loading = true
   error = false
 

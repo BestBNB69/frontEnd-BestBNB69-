@@ -9,7 +9,7 @@ import { LoginDto, LoginBackDto, RegisterDto, RegisterBackDto } from '../../mode
   providedIn: 'root',
 })
 export class Authservice {
-  private readonly API_URL = 'http://localhost:4200/api';
+  private readonly API_URL = 'http://localhost:8080/api';
 
   private isLoggedIn$ = new BehaviorSubject<boolean>(this.hasToken());
   private roles$ = new BehaviorSubject<string[]>(this.getStoredRoles());
