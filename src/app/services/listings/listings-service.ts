@@ -4,15 +4,15 @@ import { map, Observable, of, tap } from 'rxjs';
 import { CreateListingPayload, DetailsAnnoucement } from '../../models/details-annoucement';
 import { DETAILS_ANNONCEMENT } from '../../mocks/details-anoncement';
 import { ListingsDTO } from '../../models/listingsDTO';
-import {FormControl, ɵFormGroupRawValue, ɵTypedOrUntyped} from '@angular/forms';
+import { FormControl, ɵFormGroupRawValue, ɵTypedOrUntyped } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListingsService {
-  private apiUrl = 'http://localhost:8080/api/listings';
+  private apiUrl = 'http://localhost:5235/api/listings';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Génère dynamiquement les headers pour chaque requête
   private getHeaders(): HttpHeaders {
@@ -23,10 +23,10 @@ export class ListingsService {
   // 🔹 Liste complète (mock ou API)
   getAllListings(): Observable<DetailsAnnoucement[]> {
     // Pour mock
-    return of(DETAILS_ANNONCEMENT);
+    // return of(DETAILS_ANNONCEMENT);
 
     // Pour API réelle
-    // return this.http.get<DetailsAnnoucement[]>(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get<DetailsAnnoucement[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
   // 🔹 Dashboards
@@ -35,14 +35,14 @@ export class ListingsService {
   }
 
   // 🔹 Détail d'une annonce
-  getListing(id: string): Observable<DetailsAnnoucement | undefined> {
+  getListing(id: string): Observable<any | undefined> {
     // Depuis mock
-    return this.getAllListings().pipe(
-      map(listings => listings.find(listing => listing.id === id))
-    );
+    // return this.getAllListings().pipe(
+    //   map(listings => listings.find(listing => listing.id === id))
+    // );
 
     // Depuis API
-    // return this.http.get<DetailsAnnoucement>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
   // 🔹 Création

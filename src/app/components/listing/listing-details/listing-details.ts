@@ -63,7 +63,7 @@ export class ListingDetails implements OnInit {
     private readonly messagingService: MessagingService,
     private readonly router: Router,
     private readonly cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
@@ -77,17 +77,14 @@ export class ListingDetails implements OnInit {
   loadListing() {
     this.listingsService.getListing(this.id).subscribe(
       res => {
-        this.listing = res;
-
+        this.listing = res.listing;
         // Préparer les photos
         if (this.listing?.photos?.length) {
           this.listing.photos.forEach(photo => {
             photo.imageUrl = "http://localhost:5235" + photo.imageUrl;
           });
         }
-
         this.loading = false;
-
         // Vérifier la description courte
         this.isShortDescription = !(this.listing?.description && this.listing.description.length > 50);
 
@@ -101,6 +98,7 @@ export class ListingDetails implements OnInit {
         this.averageRating = this.listing?.averageRating ?? 0;
         this.totalReviews = this.listing?.totalReviews ?? 0;
 
+        // console.log(this.listing)
         this.cdr.detectChanges();
       },
       error => {
@@ -111,20 +109,20 @@ export class ListingDetails implements OnInit {
     );
   }
 
-  async contactHost() {
-    if (!this.listing) return;
+  // async contactHost() {
+  //   if (!this.listing) return;
 
-    try {
-      const conversation = await this.messagingService.getOrCreateConversationForListing(
-        this.listing.id,
-        this.listing.hostInfo.hostName
-      );
-      this.messagingService.selectConversation(conversation.id);
-      this.router.navigate(['/messages']);
-    } catch (err) {
-      console.error('Erreur lors de la création de la conversation', err);
-    }
-  }
+  //   try {
+  //     const conversation = await this.messagingService.getOrCreateConversationForListing(
+  //       this.listing.id,
+  //       this.listing.hostInfo.hostName
+  //     );
+  //     this.messagingService.selectConversation(conversation.id);
+  //     this.router.navigate(['/messages']);
+  //   } catch (err) {
+  //     console.error('Erreur lors de la création de la conversation', err);
+  //   }
+  // }
 
   getDaysInMonth(date: Date): DayCalendar[] {
     const year = date.getFullYear();

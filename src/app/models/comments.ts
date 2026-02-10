@@ -1,6 +1,6 @@
 export interface ListingComment {
   id: string;
-  userId: string;
+  name?: string;
   content: string;
   score?: number; // nullable
   parentCommentId?: string;
