@@ -5,6 +5,7 @@ import { ListingsModel } from '../../../models/listings-model';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { photoModel } from '../../../models/photos';
+import {DetailsAnnoucement} from '../../../models/details-annoucement';
 
 @Component({
   selector: 'app-listing-annoucement',
@@ -14,7 +15,7 @@ import { photoModel } from '../../../models/photos';
   styleUrl: './listing-annoucement.css',
 })
 export class ListingAnnoucement {
-  listingAnnoucement: ListingsModel[] = [];
+  listingAnnoucement: DetailsAnnoucement[] = [];
   photos: photoModel | undefined;
   private Url = 'http://localhost:5235';
   loading = true

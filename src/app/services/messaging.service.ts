@@ -10,8 +10,10 @@ export class MessagingService {
   private conversationsSubject = new BehaviorSubject<Conversation[]>([]);
   public conversations$ = this.conversationsSubject.asObservable();
 
-  private currentConversation = new BehaviorSubject<Conversation | null>(null);
-  public currentConversation$ = this.currentConversation.asObservable();
+  private currentConversationSubject =
+    new BehaviorSubject<Conversation | null>(null);
+  public currentConversation$ =
+    this.currentConversationSubject.asObservable();
 
   private messagesSubject = new BehaviorSubject<Message[]>([]);
   public messages$ = this.messagesSubject.asObservable();
@@ -72,10 +74,12 @@ export class MessagingService {
       conv.messages?.forEach((msg: Message) => {
         msg.timestamp = new Date(msg.timestamp);
       });
+
       if (conv.last_message_time) {
         conv.last_message_time = new Date(conv.last_message_time);
       }
     });
+
     this.conversationsSubject.next(conversations);
   }
 
@@ -88,8 +92,15 @@ export class MessagingService {
   }
 
   private saveConversations() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.conversationsSubject.value));
+    localStorage.setItem(
+      this.storageKey,
+      JSON.stringify(this.conversationsSubject.value)
+    );
   }
+
+  /* -----------------------------
+   * Getters
+   * ----------------------------- */
 
   getConversations(): Observable<Conversation[]> {
     return this.conversations$;
@@ -108,6 +119,26 @@ export class MessagingService {
 
     return newConversation;
   }
+
+
+  /* -----------------------------
+   * Règle métier principale
+   * ----------------------------- */
+
+  canSendMessage(conversation: Conversation | null): boolean {
+    if (!conversation || !conversation.reservation) {
+      return false;
+    }
+
+    return (
+      conversation.reservation.userId === this.currentUserId &&
+      conversation.reservation.status === 'confirmed'
+    );
+  }
+
+  /* -----------------------------
+   * Sélection / création
+   * ----------------------------- */
 
   selectConversation(conversationId: string) {
     // console.log('ALL CONVS', this.conversationsSubject.value);
@@ -147,9 +178,30 @@ export class MessagingService {
       // this.currentConversation.next(conversation);
       // this.saveConversations();
     }
+
+    const message: Message = {
+      id: 'msg-' + Date.now(),
+      sender_id: this.currentUserId,
+      sender_name: senderName,
+      content,
+      timestamp: new Date()
+    };
+
+    conversation.messages.push(message);
+    conversation.last_message = content;
+    conversation.last_message_time = new Date();
+
+    this.conversationsSubject.next(conversations);
+    this.currentConversationSubject.next(conversation);
+    this.saveConversations();
   }
 
-  getCurrentUserId(): string {
-    return this.currentUserId;
+  /* -----------------------------
+   * Dev only
+   * ----------------------------- */
+
+  resetConversations() {
+    localStorage.removeItem(this.storageKey);
+    this.loadFromJSON();
   }
 }

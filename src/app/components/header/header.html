@@ -11,7 +11,16 @@
       💬 Messages
     </a> -->
     <div class="flex items-center gap-5">
-      <a href="#" class="hidden lg:block text-dark-gray text-sm font-medium px-3 py-2 rounded-full hover:bg-gray-50 transition">Devenez hôte</a>
+      <a
+        (click)="openCreateListing()"
+        class="hidden lg:block cursor-pointer text-dark-gray text-sm font-medium px-3 py-2 rounded-full hover:bg-gray-50 transition">
+        Devenez hôte
+      </a>
+
+      <app-create-listing-modal
+        *ngIf="showCreateListing"
+        (close)="showCreateListing = false">
+      </app-create-listing-modal>
       <app-menu-navbar></app-menu-navbar>
     </div>
   </nav>

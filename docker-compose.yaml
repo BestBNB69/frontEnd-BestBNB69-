@@ -1,4 +1,5 @@
-version: '3.9'
+version: "3.9"
+
 services:
   front:
     build:
@@ -13,9 +14,13 @@ services:
     volumes:
       - .:/app
     restart: unless-stopped
-    networks:
-      - miniBNB_network
 
-networks:
-  miniBNB_network:
-    external: true
+  backend:
+    build:
+      context: ../MiniBNB
+    container_name: minibnb-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "5235:8080"
+
