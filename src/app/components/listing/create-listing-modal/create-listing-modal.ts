@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import {ListingsService} from '../../../services/listings/listings-service';
+import { ListingsService } from '../../../services/listings/listings-service';
 
 @Component({
   selector: 'app-create-listing-modal',
@@ -17,7 +17,10 @@ export class CreateListingModal {
   loading = false;
   form: FormGroup;
 
-  readonly API_URL = 'http://localhost:8080/api/listings';
+  imageFiles: File[] = [];
+  imagePreviews: string[] = [];
+
+  readonly API_URL = 'http://localhost:5235/api/listings';
 
   locations = [
     { label: 'Plage', value: 0 },
@@ -98,6 +101,30 @@ export class CreateListingModal {
         ? current.filter(v => v !== value)
         : [...current, value],
     });
+  }
+
+  onImagesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+
+    const files = Array.from(input.files);
+
+    files.forEach(file => {
+      this.imageFiles.push(file);
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        this.imagePreviews.push(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+    console.log(this.imageFiles)
+    input.value = '';
+  }
+
+  removeImage(index: number): void {
+    this.imageFiles.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
   }
 
   submit(): void {
