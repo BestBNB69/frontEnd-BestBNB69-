@@ -35,7 +35,8 @@ export const routes: Routes = [
     {
         path: 'messages/:id',
         canActivate: [Authguard],
-        component: Messaging
+        component: Messaging,
+        title: "Messages",
     },
 
     {

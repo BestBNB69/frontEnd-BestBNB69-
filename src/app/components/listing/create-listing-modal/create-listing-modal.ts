@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { ListingsService } from '../../../services/listings/listings-service';
 
 @Component({
@@ -18,6 +19,8 @@ export class CreateListingModal {
 
   imageFiles: File[] = [];
   imagePreviews: string[] = [];
+
+  readonly API_URL = 'http://localhost:5235/api/listings';
 
   locations = [
     { label: 'Plage', value: 0 },
@@ -115,7 +118,7 @@ export class CreateListingModal {
       };
       reader.readAsDataURL(file);
     });
-
+    console.log(this.imageFiles)
     input.value = '';
   }
 

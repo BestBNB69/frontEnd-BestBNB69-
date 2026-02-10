@@ -16,6 +16,11 @@
         class="hidden lg:block cursor-pointer text-dark-gray text-sm font-medium px-3 py-2 rounded-full hover:bg-gray-50 transition">
         Devenez hôte
       </a>
+      <a
+        (click)="logout()"
+        class="hidden lg:block cursor-pointer text-dark-gray text-sm font-medium px-3 py-2 rounded-full hover:bg-gray-50 transition">
+        Se Déconnecter
+      </a>
 
       <app-create-listing-modal
         *ngIf="showCreateListing"

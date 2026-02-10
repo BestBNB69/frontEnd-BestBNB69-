@@ -61,42 +61,42 @@ export class ListingComment implements OnInit {
     });
   }
   submitComment() {
-  if (!this.newComment || !this.selectedRating) return;
+    if (!this.newComment || !this.selectedRating) return;
 
-  this.ratingsService.createComment({
-    listingId: this.listingId,
-    content: this.newComment,
-    score: this.selectedRating
-  }).subscribe({
-    next: (res) => {
-      // add new comment immutably to update UI instantly
-      this.comments = [
-        {
-          id: res.commentId,
-          userId: 'currentUser', // replace with actual user id from auth
-          content: this.newComment,
-          score: this.selectedRating,
-          createdAt: new Date(),
-          replies: []
-        },
-        ...this.comments
-      ];
+    this.ratingsService.createComment({
+      listingId: this.listingId,
+      content: this.newComment,
+      score: this.selectedRating
+    }).subscribe({
+      next: (res) => {
+        // add new comment immutably to update UI instantly
+        this.comments = [
+          {
+            id: res.commentId,
+            userId: 'currentUser', // replace with actual user id from auth
+            content: this.newComment,
+            score: this.selectedRating,
+            createdAt: new Date(),
+            replies: []
+          },
+          ...this.comments
+        ];
 
-      // reset form
-      this.newComment = '';
-      this.selectedRating = 0;
+        // reset form
+        this.newComment = '';
+        this.selectedRating = 0;
 
-      // update average rating and total reviews immutably
-      const totalScore = this.comments.reduce((sum, c) => sum + (c.score ?? 0), 0);
-      const totalCount = this.comments.filter(c => c.score != null).length;
-      this.averageRating = totalCount > 0 ? totalScore / totalCount : 0;
+        // update average rating and total reviews immutably
+        const totalScore = this.comments.reduce((sum, c) => sum + (c.score ?? 0), 0);
+        const totalCount = this.comments.filter(c => c.score != null).length;
+        this.averageRating = totalCount > 0 ? totalScore / totalCount : 0;
 
-      // trigger Angular change detection
-      this.cdr.detectChanges();
-    },
-    error: (err) => console.error(err)
-  });
-}
+        // trigger Angular change detection
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error(err)
+    });
+  }
 
   toggleReplyForm(commentId: string) {
     this.replyFormVisible[commentId] = !this.replyFormVisible[commentId];
